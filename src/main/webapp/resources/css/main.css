@@ -38,6 +38,10 @@
 }
 
 .pp-copyright {
+    float: right;
+}
+
+.pp-copyright-icon {
     display: inline-block !important;
 }
 
