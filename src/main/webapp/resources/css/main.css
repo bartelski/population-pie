@@ -10,6 +10,10 @@
     position: absolute !important;
 }
 
+.pp-southLayoutUnit > .ui-layout-unit-content  {
+    overflow: hidden !important;
+}
+
 .pp-tree {
     border: none;
     width: 100% !important;
@@ -31,5 +35,9 @@
     width: 70%;
     height: 450px;
     float:left;
+}
+
+.pp-copyright {
+    display: inline-block !important;
 }
 
