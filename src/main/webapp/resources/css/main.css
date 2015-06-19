@@ -1,0 +1,35 @@
+<!--
+/**
+ * (c) Copyright i4 Software Ltd. All Rights Reserved.
+ *
+ * @author David Barton
+ * @since May 2015
+ */
+-->
+.ui-tree-container {
+    position: absolute !important;
+}
+
+.pp-tree {
+    border: none;
+    width: 100% !important;
+}
+
+.pp-factTable {
+    width: 100%;
+    margin-bottom: 20px;
+    word-wrap: normal;
+}
+
+.pp-pieChart {
+    width: 30%;
+    height: 450px;
+    float:left;
+}
+
+.pp-barChart {
+    width: 70%;
+    height: 450px;
+    float:left;
+}
+

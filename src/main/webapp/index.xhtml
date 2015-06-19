@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<!--
+/**
+ * (c) Copyright i4 Software Ltd. All Rights Reserved.
+ *
+ * @author David Barton
+ * @since May 2015
+ */-->
+
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pp="http://java.sun.com/jsf/composite/component"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition>
+
+    <h:head>
+        <link rel="shortcut icon" type="image/x-icon" href="resources/favicon.ico"/>
+        <h:outputStylesheet library="css" name="main.css"/>
+    </h:head>
+
+    <h:body>
+        <pp:main locationTypes="#{mainController.locationTypes}"
+                 factTypes="#{mainController.factTypes}"/>
+    </h:body>
+
+</ui:composition>
+
+</html>

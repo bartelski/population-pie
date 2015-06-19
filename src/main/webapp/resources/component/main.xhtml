@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<!--
+/**
+ * (c) Copyright i4 Software Ltd. All Rights Reserved.
+ *
+ * @author David Barton
+ * @since May 2015
+ */
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pp="http://java.sun.com/jsf/composite/component"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface componentType="main">
+    <composite:attribute name="locationTypes" required="true" type="java.util.ArrayList"/>
+    <composite:attribute name="factTypes" required="true" type="uk.co.i4software.poppie.census.FactType[]"/>
+</composite:interface>
+
+<composite:implementation>
+
+    <p:layout fullPage="true">
+        <p:layoutUnit position="west" header="Locations" collapsible="true" resizable="true" size="250" minSize="200">
+            <h:form styleClass="pp-form">
+                <p:tree value="#{cc.mainModel.locationTree}" var="node" selectionMode="multiple"
+                        selection="#{cc.mainModel.selectedTreeNodes}" styleClass="pp-tree">
+
+                    <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"/>
+                    <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"/>
+
+                    <p:treeNode>
+                        <h:outputText value="#{node}"/>
+                    </p:treeNode>
+                </p:tree>
+            </h:form>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            <p:accordionPanel dynamic="true" cache="true" multiple="true" activeIndex="">
+                <c:forEach items="#{cc.attrs.factTypes}" var="factType">
+                    <p:tab title="#{factType.displayName}">
+                        <p:outputPanel id="#{factType.displayName}-population">
+                            <pp:population locations="#{cc.mainModel.selectedLocations}" factNames="#{factType.factNames}"/>
+                        </p:outputPanel>
+                    </p:tab>
+                </c:forEach>
+            </p:accordionPanel>
+        </p:layoutUnit>
+    </p:layout>
+
+</composite:implementation>
+
+</html>
