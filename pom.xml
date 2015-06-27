@@ -9,8 +9,8 @@
     <name>population-pie Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
-    <dependencies>
 
+    <dependencies>
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
@@ -102,11 +102,21 @@
             <version>1.16.4</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
     <build>
         <finalName>population-pie</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://10.0.1.4:8080/manager/text</url>
+                    <server>pp-server</server>
+                    <path>/${project.build.finalName}</path>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
-
 </project>
