@@ -19,10 +19,8 @@
     width: 100% !important;
 }
 
-.pp-factTable {
-    width: 100%;
+.pp-dataTableStyle {
     margin-bottom: 20px;
-    word-wrap: normal;
 }
 
 .pp-pieChart {

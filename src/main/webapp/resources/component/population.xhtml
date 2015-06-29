@@ -27,8 +27,8 @@
 
     <p:outputPanel rendered="#{cc.componentRendered}">
 
-        <p:dataTable value="#{cc.attrs.locations}" var="location" styleClass="pp-factTable"
-                     resizableColumns="true" rowHover="true">
+        <p:dataTable value="#{cc.attrs.locations}" var="location" rowHover="true" styleClass="pp-dataTableStyle"
+                     tableStyle="width:auto; min-width: 100%" resizableColumns="true" resizeMode="expand" >
 
             <p:columnGroup type="header">
                 <p:row>
