@@ -26,22 +26,21 @@
         <p:layoutUnit id="westLayoutUnit" position="west" header="Locations" collapsible="true" resizable="true"
                       size="250" minSize="200">
 
-            <p:outputPanel id="pp-tree-outputPanel" styleClass="pp-outputPanel-tree">
-
                 <h:form>
                     <p:tree value="#{cc.mainModel.locationTree}" var="node" selectionMode="multiple"
                             selection="#{cc.mainModel.selectedTreeNodes}" styleClass="pp-tree">
 
                         <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
                                 onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
-                        <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"/>
+                        <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
+                                onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
 
                         <p:treeNode><h:outputText value="#{node}"/></p:treeNode>
 
                     </p:tree>
                 </h:form>
-            </p:outputPanel>
-            <p:blockUI block="pp-tree-outputPanel" widgetVar="treeBlocker"/>
+
+            <p:blockUI block="westLayoutUnit" widgetVar="treeBlocker"/>
 
         </p:layoutUnit>
 
