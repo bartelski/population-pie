@@ -19,18 +19,17 @@
     width: 100% !important;
 }
 
-.pp-dataTableStyle {
-    margin-bottom: 20px;
+.pp-accordionPanel > .ui-accordion-content {
+    padding-bottom: 0 !important;
 }
-
 .pp-chartLayout {
     min-width: 100%;
-    height:465px;
+    height:435px;
     overflow-y: hidden !important;
 }
 
 .pp-pieChartLayout {
-    min-width: 450px;
+    min-width: 500px;
 }
 
 .pp-pieChartLayout > div {
@@ -38,8 +37,8 @@
 }
 
 .pp-pieChart {
-    min-width: 400px;
-    height: 450px;
+    min-width: 500px;
+    height: 425px;
 }
 
 .pp-barChartLayout {
@@ -52,7 +51,7 @@
 
 .pp-barChart {
     min-width: 800px;
-    height: 450px;
+    height: 425px;
 }
 
 .pp-copyright {
@@ -62,4 +61,6 @@
 .pp-copyright-icon {
     display: inline-block !important;
 }
+
+
 
