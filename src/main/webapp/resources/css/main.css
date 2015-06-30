@@ -23,16 +23,36 @@
     margin-bottom: 20px;
 }
 
+.pp-chartLayout {
+    min-width: 100%;
+    height:465px;
+    overflow-y: hidden !important;
+}
+
+.pp-pieChartLayout {
+    min-width: 450px;
+}
+
+.pp-pieChartLayout > div {
+    overflow:hidden !important;
+}
+
 .pp-pieChart {
-    width: 30%;
+    min-width: 400px;
     height: 450px;
-    float:left;
+}
+
+.pp-barChartLayout {
+    min-width: 900px;
+}
+
+.pp-barChartLayout > div {
+    overflow: hidden !important;
 }
 
 .pp-barChart {
-    width: 70%;
+    min-width: 800px;
     height: 450px;
-    float:left;
 }
 
 .pp-copyright {

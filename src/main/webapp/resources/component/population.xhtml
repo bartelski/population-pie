@@ -28,7 +28,7 @@
     <p:outputPanel rendered="#{cc.componentRendered}">
 
         <p:dataTable value="#{cc.attrs.locations}" var="location" rowHover="true" styleClass="pp-dataTableStyle"
-                     tableStyle="width:auto; min-width: 100%" resizableColumns="true" resizeMode="expand" >
+                     tableStyle="width:auto; min-width: 100%" resizableColumns="true" resizeMode="expand">
 
             <p:columnGroup type="header">
                 <p:row>
@@ -60,8 +60,15 @@
 
         </p:dataTable>
 
-        <p:chart type="pie" model="#{cc.pieChartModel}" styleClass="pp-pieChart"/>
-        <p:chart type="bar" model="#{cc.barChartModel}" styleClass="pp-barChart"/>
+        <p:layout styleClass="pp-chartLayout">
+            <p:layoutUnit position="west" style="border:none; overflow: hidden" styleClass="pp-pieChartLayout">
+                    <p:chart type="pie" model="#{cc.pieChartModel}" styleClass="pp-pieChart"/>
+
+            </p:layoutUnit>
+                <p:layoutUnit position="center" style="border:none" styleClass="pp-barChartLayout">
+                    <p:chart type="bar" model="#{cc.barChartModel}" styleClass="pp-barChart"/>
+                </p:layoutUnit>
+        </p:layout>
 
     </p:outputPanel>
 

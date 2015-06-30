@@ -23,8 +23,8 @@ class PopulationModelCreator {
     private static final String PIE_LEGEND_POSITION = "n";
     private static final String BAR_LEGEND_POSITION = "e";
     private static final boolean BAR_STACKED = true;
-    public static final String BAR_DATATIP_FORMAT = "%1$d";
-    public static final boolean BAR_ANIMATED = true;
+    private static final String BAR_DATATIP_FORMAT = "%1$d";
+    private static final boolean BAR_ANIMATED = true;
 
     private final Location[] locations;
     private final FactName[] factNames;
