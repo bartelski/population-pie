@@ -27,10 +27,34 @@ public enum FactName {
     FULL_TIME_STUDENTS("Full time students", 24),
 
     WHITE("White", 25),
-    BLACK_AND_MINORITY_ETHNIC("Black or Minority Ethnic", 30);
+    BLACK_AND_MINORITY_ETHNIC("Black or Minority Ethnic", 30),
+
+    WHITE_BRITISH("White British", 26),
+    WHITE_IRISH("White Irish", 27),
+    WHITE_GYPSY_OR_IRISH_TRAVELLER("White Gypsy or Irish Traveller", 28),
+    OTHER_WHITE("Other White", 29),
+
+    WHITE_AND_BLACK_CARIBBEAN("White and Black Caribbean", 31),
+    WHITE_AND_BLACK_AFRICAN("White and Black African", 32),
+    WHITE_AND_ASIAN("White and Asian", 33),
+    OTHER_MIXED("Other Mixed", 34),
+
+    INDIAN("Indian", 35 ),
+    PAKISTANI("Pakistani", 36),
+    BANGLADESHI("Bangladeshi", 37),
+    CHINESE("Chinese", 38),
+    OTHER_ASIAN("Other Asian", 39),
+
+    AFRICAN("African", 40),
+    CARIBBEAN("Caribbean", 41),
+    OTHER_BLACK("Other Black", 42),
+
+    ARAB("Arab", 43),
+    OTHER("Other", 44);
 
     @Getter
     private final String displayName;
+
     @Getter
     private final int jsonColumnNumber;
 

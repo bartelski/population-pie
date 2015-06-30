@@ -105,4 +105,43 @@ public class BathHackedCensus2011Test {
     private long factValue(Location location, FactName factName) {
         return actual(location).factValueOf(factName);
     }
+
+    @Test
+    public void testEthnicBackgroundWhiteFacts() throws Exception {
+        assertEquals(4238, factValue(ABBEY, FactName.WHITE_BRITISH));
+        assertEquals(78, factValue(ABBEY, FactName.WHITE_IRISH));
+        assertEquals(0, factValue(ABBEY, FactName.WHITE_GYPSY_OR_IRISH_TRAVELLER));
+        assertEquals(660, factValue(ABBEY, FactName.OTHER_WHITE));
+    }
+
+    @Test
+    public void testEthnicBackgroundMixedFacts() throws Exception {
+        assertEquals(19, factValue(ABBEY, FactName.WHITE_AND_BLACK_CARIBBEAN));
+        assertEquals(17, factValue(ABBEY, FactName.WHITE_AND_BLACK_AFRICAN));
+        assertEquals(34, factValue(ABBEY, FactName.WHITE_AND_ASIAN));
+        assertEquals(49, factValue(ABBEY, FactName.OTHER_MIXED));
+    }
+
+    @Test
+    public void testEthnicBackgroundAsianFacts() throws Exception {
+        assertEquals(83, factValue(ABBEY, FactName.INDIAN));
+        assertEquals(3, factValue(ABBEY, FactName.PAKISTANI));
+        assertEquals(10, factValue(ABBEY, FactName.BANGLADESHI));
+        assertEquals(196, factValue(ABBEY, FactName.CHINESE));
+        assertEquals(136, factValue(ABBEY, FactName.OTHER_ASIAN));
+    }
+
+    @Test
+    public void testEthnicBackgroundBlackFacts() throws Exception {
+        assertEquals(22, factValue(ABBEY, FactName.AFRICAN));
+        assertEquals(32, factValue(ABBEY, FactName.CARIBBEAN));
+        assertEquals(8, factValue(ABBEY, FactName.OTHER_BLACK));
+    }
+
+    @Test
+    public void testEthnicBackgroundOtherFacts() throws Exception {
+        assertEquals(40, factValue(ABBEY, FactName.ARAB));
+        assertEquals(45, factValue(ABBEY, FactName.OTHER));
+    }
+
 }
