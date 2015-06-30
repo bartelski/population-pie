@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static uk.co.i4software.poppie.census.FactName.*;
 import static uk.co.i4software.poppie.census.MockCensus.*;
 
 /**
@@ -93,5 +94,15 @@ public class BathHackedCensus2011Test {
             assertTrue(actualLocation.getFacts().contains(fact));
             assertEquals(mockLocation.factValueOf(fact.getFactName()), actualLocation.factValueOf(fact.getFactName()));
         }
+    }
+
+    @Test
+    public void testEthnicBackgroundFacts() throws Exception {
+        assertEquals(4976, factValue(ABBEY, WHITE));
+        assertEquals(694, factValue(ABBEY, BLACK_AND_MINORITY_ETHNIC));
+    }
+
+    private long factValue(Location location, FactName factName) {
+        return actual(location).factValueOf(factName);
     }
 }

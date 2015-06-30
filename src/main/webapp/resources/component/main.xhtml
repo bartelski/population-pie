@@ -49,7 +49,7 @@
             <p:accordionPanel dynamic="true" multiple="true" activeIndex="" styleClass="pp-accordionPanel">
                 <c:forEach items="#{cc.attrs.factTypes}" var="factType">
                     <p:tab title="#{factType.displayName}">
-                        <p:outputPanel id="#{factType.displayName}-population">
+                        <p:outputPanel id="#{factType}-population">
                             <pp:population locations="#{cc.mainModel.selectedLocations}"
                                            factNames="#{factType.factNames}"/>
                         </p:outputPanel>

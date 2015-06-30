@@ -24,7 +24,10 @@ public enum FactName {
 
     IN_HOUSEHOLDS("In households", 22),
     IN_COMMUNAL_ESTABLISHMENTS("In communal establishments", 23),
-    FULL_TIME_STUDENTS("Full time students", 24);
+    FULL_TIME_STUDENTS("Full time students", 24),
+
+    WHITE("White", 25),
+    BLACK_AND_MINORITY_ETHNIC("Black or Minority Ethnic", 30);
 
     @Getter
     private final String displayName;
