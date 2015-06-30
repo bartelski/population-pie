@@ -28,18 +28,18 @@
 
             <p:outputPanel id="pp-tree-outputPanel" styleClass="pp-outputPanel-tree">
 
-            <h:form>
-                <p:tree value="#{cc.mainModel.locationTree}" var="node" selectionMode="multiple"
-                        selection="#{cc.mainModel.selectedTreeNodes}" styleClass="pp-tree">
+                <h:form>
+                    <p:tree value="#{cc.mainModel.locationTree}" var="node" selectionMode="multiple"
+                            selection="#{cc.mainModel.selectedTreeNodes}" styleClass="pp-tree">
 
-                    <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
-                            onstart="PF('treeBlocker').show();"  oncomplete="PF('treeBlocker').hide();"/>
-                    <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"/>
+                        <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
+                                onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
+                        <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"/>
 
-                    <p:treeNode><h:outputText value="#{node}"/></p:treeNode>
+                        <p:treeNode><h:outputText value="#{node}"/></p:treeNode>
 
-                </p:tree>
-            </h:form>
+                    </p:tree>
+                </h:form>
             </p:outputPanel>
             <p:blockUI block="pp-tree-outputPanel" widgetVar="treeBlocker"/>
 
