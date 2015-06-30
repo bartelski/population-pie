@@ -25,23 +25,20 @@
     <p:layout fullPage="true">
         <p:layoutUnit id="westLayoutUnit" position="west" header="Locations" collapsible="true" resizable="true"
                       size="250" minSize="200">
+            <h:form>
+                <p:tree value="#{cc.mainModel.locationTree}" var="node" selectionMode="multiple"
+                        selection="#{cc.mainModel.selectedTreeNodes}" styleClass="pp-tree">
 
-                <h:form>
-                    <p:tree value="#{cc.mainModel.locationTree}" var="node" selectionMode="multiple"
-                            selection="#{cc.mainModel.selectedTreeNodes}" styleClass="pp-tree">
+                    <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
+                            onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
+                    <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
+                            onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
 
-                        <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
-                                onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
-                        <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
-                                onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
+                    <p:treeNode><h:outputText value="#{node}"/></p:treeNode>
 
-                        <p:treeNode><h:outputText value="#{node}"/></p:treeNode>
-
-                    </p:tree>
-                </h:form>
-
+                </p:tree>
+            </h:form>
             <p:blockUI block="westLayoutUnit" widgetVar="treeBlocker"/>
-
         </p:layoutUnit>
 
         <p:layoutUnit position="center">
