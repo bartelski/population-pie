@@ -23,19 +23,26 @@
 <composite:implementation>
 
     <p:layout fullPage="true">
-        <p:layoutUnit position="west" header="Locations" collapsible="true" resizable="true" size="250" minSize="200">
-            <h:form styleClass="pp-form">
+        <p:layoutUnit id="westLayoutUnit" position="west" header="Locations" collapsible="true" resizable="true"
+                      size="250" minSize="200">
+
+            <p:outputPanel id="pp-tree-outputPanel" styleClass="pp-outputPanel-tree">
+
+            <h:form>
                 <p:tree value="#{cc.mainModel.locationTree}" var="node" selectionMode="multiple"
                         selection="#{cc.mainModel.selectedTreeNodes}" styleClass="pp-tree">
 
-                    <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"/>
+                    <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
+                            onstart="PF('treeBlocker').show();"  oncomplete="PF('treeBlocker').hide();"/>
                     <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"/>
 
-                    <p:treeNode>
-                        <h:outputText value="#{node}"/>
-                    </p:treeNode>
+                    <p:treeNode><h:outputText value="#{node}"/></p:treeNode>
+
                 </p:tree>
             </h:form>
+            </p:outputPanel>
+            <p:blockUI block="pp-tree-outputPanel" widgetVar="treeBlocker"/>
+
         </p:layoutUnit>
 
         <p:layoutUnit position="center">
@@ -43,7 +50,8 @@
                 <c:forEach items="#{cc.attrs.factTypes}" var="factType">
                     <p:tab title="#{factType.displayName}">
                         <p:outputPanel id="#{factType.displayName}-population">
-                            <pp:population locations="#{cc.mainModel.selectedLocations}" factNames="#{factType.factNames}"/>
+                            <pp:population locations="#{cc.mainModel.selectedLocations}"
+                                           factNames="#{factType.factNames}"/>
                         </p:outputPanel>
                     </p:tab>
                 </c:forEach>
@@ -55,7 +63,6 @@
             <span class="pp-copyright">Copyright <h:outputText styleClass="ui-icon fa fa-copyright pp-copyright-icon"/> 2015 I4 Software Ltd. All rights reserved.</span>
         </p:layoutUnit>
     </p:layout>
-
 
 </composite:implementation>
 

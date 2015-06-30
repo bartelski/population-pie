@@ -6,6 +6,10 @@
  * @since May 2015
  */
 -->
+.pp-outputPanel-tree {
+    width:100%;
+    height: 100%;
+}
 .ui-tree-container {
     position: absolute !important;
 }
