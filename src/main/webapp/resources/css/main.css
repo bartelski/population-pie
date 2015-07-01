@@ -67,8 +67,8 @@
 }
 
 .pp-settingsIcon {
-    max-width: 24px;
-    max-height: 24px;
+    max-width: 24px !important;
+    max-height: 24px !important;
     float: left;
 }
 
