@@ -24,7 +24,7 @@ class PopulationModelCreator {
     private static final boolean BAR_STACKED = false;
     private static final String BAR_DATATIP_FORMAT = "%1$d";
     private static final boolean BAR_ANIMATED = true;
-    public static final int PIE_DIAMETER = 325;
+    private static final int PIE_DIAMETER = 325;
 
     private final Location[] locations;
     private final FactName[] factNames;
