@@ -20,10 +20,11 @@ class PopulationModelCreator {
 
     private static final boolean PIE_SHOW_DATA_LABELS = true;
     private static final String PIE_LEGEND_POSITION = "n";
-    private static final String BAR_LEGEND_POSITION = "e";
-    private static final boolean BAR_STACKED = true;
+    private static final String BAR_LEGEND_POSITION = "sw";
+    private static final boolean BAR_STACKED = false;
     private static final String BAR_DATATIP_FORMAT = "%1$d";
     private static final boolean BAR_ANIMATED = true;
+    public static final int PIE_DIAMETER = 325;
 
     private final Location[] locations;
     private final FactName[] factNames;
@@ -138,9 +139,12 @@ class PopulationModelCreator {
     private void configurePie(PieChartModel pieChartModel) {
         pieChartModel.setShowDataLabels(PIE_SHOW_DATA_LABELS);
         pieChartModel.setLegendPosition(PIE_LEGEND_POSITION);
-        pieChartModel.setDiameter(300);
-        pieChartModel.setLegendCols(4);
-        pieChartModel.setDataLabelThreshold(2);
+        pieChartModel.setDiameter(PIE_DIAMETER);
+        pieChartModel.setLegendCols(legendCols(pieChartModel));
+    }
+
+    private int legendCols(PieChartModel pieChartModel) {
+        return Math.min((int) Math.ceil(((double) pieChartModel.getData().size()) / 2), 3);
     }
 
     private HorizontalBarChartModel barChartModel() {

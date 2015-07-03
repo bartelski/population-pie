@@ -102,13 +102,13 @@ public enum FactName {
     LONG_TERM_SICK(92, "Sick/Disabled", 230),
     ECONOMICALLY_INACTIVE_OTHER(93, "Other", 94),
 
-    NO_QUALIFICATIONS(100, "No qualifications", 538),
+    NO_QUALIFICATIONS(100, "None", 538),
     LEVEL_ONE(101, "Level 1", 313),
     LEVEL_TWO(102, "Level 2", 488),
     APPRENTICESHIP(103, "Apprenticeship", 60),
     LEVEL_THREE(104, "Level 3", 876),
     LEVEL_FOUR(105, "Level 4", 2725),
-    QUALIFICATIONS_OTHER(106, "Other Qualifications", 323),
+    QUALIFICATIONS_OTHER(106, "Other", 323),
 
     WORK_FROM_HOME(108, "Work from home", 277),
     LIGHT_RAIL(109, "Light rail", 5),
