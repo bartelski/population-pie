@@ -8,8 +8,7 @@ import uk.co.i4software.poppie.census.FactName;
 import uk.co.i4software.poppie.census.Location;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * (c) Copyright i4 Software Ltd. All Rights Reserved.
@@ -128,7 +127,7 @@ class PopulationModelCreator {
 
     private Map<String, Number> pieData(Map<FactName, Long> factTotals) {
 
-        Map<String, Number> pieData = new HashMap<String, Number>();
+        Map<String, Number> pieData = new LinkedHashMap<String, Number>();
 
         for (FactName factName : factNames)
             pieData.put(factName.getDisplayName(), factTotals.get(factName));
