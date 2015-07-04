@@ -29,8 +29,7 @@ public class PopulationModelCreatorTest {
     private static final Number[] MULTIPLE_LOCATION_PIE_VALUES = {468L, 104L, 102L, 1181L, 2018L, 3312L, 381L, 595L};
 
     private static final Number[] ABBEY_TABLE_VALUES = {141L, 104L, 102L, 1181L, 2018L, 1148L, 381L, 595L};
-    private static final String[] ABBEY_TABLE_PERCENTAGES = {"2.49", "1.83", "1.80", "20.83", "35.59", "20.25", "6" +
-            ".72", "10.49"};
+    private static final Number[] ABBEY_TABLE_PERCENTAGES = {2.49, 1.83, 1.80, 20.83, 35.59, 20.25, 6.72, 10.49};
 
     @Test
     public void testPieChartModelForSingleLocation() {
@@ -62,7 +61,7 @@ public class PopulationModelCreatorTest {
         testTableModel(ABBEY, ABBEY_TABLE_VALUES, ABBEY_TABLE_PERCENTAGES);
     }
 
-    private void testTableModel(Location location, Number[] tableValues, String[] tablePercentages) {
+    private void testTableModel(Location location, Number[] tableValues, Number[] tablePercentages) {
 
         final PopulationModel populationModel = populationModel(new Location[]{location});
 

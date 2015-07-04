@@ -22,10 +22,10 @@ public class PopulationModel implements Serializable {
     @Getter private final PieChartModel pieChartModel;
     @Getter private final HorizontalBarChartModel barChartModel;
 
-    private final Map<Location, Map<FactName, String>> locationPercentages;
+    private final Map<Location, Map<FactName, Number>> locationPercentages;
 
     public PopulationModel(PieChartModel pieChartModel, HorizontalBarChartModel barChartModel,
-                           Map<Location, Map<FactName, String>> locationPercentages) {
+                           Map<Location, Map<FactName, Number>> locationPercentages) {
 
         this.pieChartModel = pieChartModel;
         this.barChartModel = barChartModel;
@@ -36,7 +36,7 @@ public class PopulationModel implements Serializable {
         return location.factValueOf(factName);
     }
 
-    public String percentageOf(Location location, FactName factName) {
+    public Number percentageOf(Location location, FactName factName) {
         return locationPercentages.get(location).get(factName);
     }
 }

@@ -40,7 +40,7 @@ class PopulationModelCreator {
         final Map<FactName, Long> factTotals = indexFactTotals();
         final Map<Location, Long> locationTotals = indexLocationTotals();
 
-        final Map<Location, Map<FactName, String>> locationPercentages = indexLocationPercentages(locationTotals);
+        final Map<Location, Map<FactName, Number>> locationPercentages = indexLocationPercentages(locationTotals);
 
         return new PopulationModel(pieChartModel(factTotals), barChartModel(), locationPercentages);
     }
@@ -89,9 +89,9 @@ class PopulationModelCreator {
         return locationTotal;
     }
 
-    private Map<Location, Map<FactName, String>> indexLocationPercentages(Map<Location, Long> locationTotals) {
+    private Map<Location, Map<FactName, Number>> indexLocationPercentages(Map<Location, Long> locationTotals) {
 
-        Map<Location, Map<FactName, String>> locationPercentages = new HashMap<Location, Map<FactName, String>>();
+        Map<Location, Map<FactName, Number>> locationPercentages = new HashMap<Location, Map<FactName, Number>>();
 
         for (Location location : locations)
             locationPercentages.put(location, factPercentagesFor(location, locationTotals));
@@ -99,9 +99,9 @@ class PopulationModelCreator {
         return locationPercentages;
     }
 
-    private Map<FactName, String> factPercentagesFor(Location location, Map<Location, Long> locationTotals) {
+    private Map<FactName, Number> factPercentagesFor(Location location, Map<Location, Long> locationTotals) {
 
-        Map<FactName, String> factPercentages = new HashMap<FactName, String>();
+        Map<FactName, Number> factPercentages = new HashMap<FactName, Number>();
 
         for (FactName factName : factNames)
             factPercentages.put(factName, percentageOf(location.factValueOf(factName), locationTotals.get(location)));
@@ -109,13 +109,13 @@ class PopulationModelCreator {
         return factPercentages;
     }
 
-    private String percentageOf(Long factValue, Long factTotal) {
-        return factValue == null ? null : formatAtPercentage(factValue.doubleValue() * 100 / factTotal.doubleValue());
+    private Number percentageOf(Long factValue, Long factTotal) {
+        return factValue == null ? null : formatAsPercentage(factValue.doubleValue() * 100 / factTotal.doubleValue());
     }
 
-    private String formatAtPercentage(double percentage) {
+    private Number formatAsPercentage(double percentage) {
         DecimalFormat df = new DecimalFormat("0.00");
-        return df.format(percentage);
+        return Double.valueOf(df.format(percentage));
     }
 
     private PieChartModel pieChartModel(Map<FactName, Long> factTotals) {

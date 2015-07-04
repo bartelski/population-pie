@@ -64,7 +64,7 @@ public class PopulationComponent extends UINamingContainer {
         return getPopulationModel().valueOf(location, factName);
     }
 
-    public String percentageOf(Location location, FactName factName) {
+    public Number percentageOf(Location location, FactName factName) {
         return getPopulationModel().percentageOf(location, factName);
     }
 
