@@ -73,7 +73,7 @@ public class PopulationModelCreatorTest {
 
     @Test
     public void testBarChartModel() {
-        testBarChartModelForLocations(ABBEY, ABBEY_TABLE_VALUES);
+        testBarChartModelForLocations(ABBEY, ABBEY_TABLE_PERCENTAGES);
     }
 
     private void testBarChartModelForLocations(Location location, Number[] values) {

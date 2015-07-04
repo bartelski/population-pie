@@ -28,6 +28,9 @@ class PopulationModelCreator {
 
     private final Location[] locations;
     private final FactName[] factNames;
+    private Map<FactName, Long> factTotals;
+    private Map<Location, Long> locationTotals;
+    private Map<Location, Map<FactName, Number>> locationPercentages;
 
 
     public PopulationModelCreator(Location[] locations, FactName[] factNames) {
@@ -37,25 +40,23 @@ class PopulationModelCreator {
 
     public PopulationModel create() {
 
-        final Map<FactName, Long> factTotals = indexFactTotals();
-        final Map<Location, Long> locationTotals = indexLocationTotals();
+        indexFactTotals();
+        indexLocationTotals();
 
-        final Map<Location, Map<FactName, Number>> locationPercentages = indexLocationPercentages(locationTotals);
+        indexLocationPercentages();
 
-        return new PopulationModel(pieChartModel(factTotals), barChartModel(), locationPercentages);
+        return new PopulationModel(pieChartModel(), barChartModel(locationPercentages), locationPercentages);
     }
 
-    private Map<FactName, Long> indexFactTotals() {
+    private void indexFactTotals() {
 
-        Map<FactName, Long> factTotals = new HashMap<FactName, Long>();
+        factTotals = new HashMap<FactName, Long>();
 
         for (Location location : locations)
-            calculateFactTotals(location, factTotals);
-
-        return factTotals;
+            calculateFactTotals(location);
     }
 
-    private void calculateFactTotals(Location location, Map<FactName, Long> factTotals) {
+    private void calculateFactTotals(Location location) {
 
         for (Fact fact : location.factsFor(factNames))
             factTotals.put(fact.getFactName(), totalFor(fact, factTotals));
@@ -69,14 +70,12 @@ class PopulationModelCreator {
         return factTotals.containsKey(factName) ? factTotals.get(factName) : 0;
     }
 
-    private Map<Location, Long> indexLocationTotals() {
+    private void indexLocationTotals() {
 
-        Map<Location, Long> locationTotals = new HashMap<Location, Long>();
+        locationTotals = new HashMap<Location, Long>();
 
         for (Location location : locations)
             locationTotals.put(location, totalFor(location));
-
-        return locationTotals;
     }
 
     private long totalFor(Location location) {
@@ -89,9 +88,9 @@ class PopulationModelCreator {
         return locationTotal;
     }
 
-    private Map<Location, Map<FactName, Number>> indexLocationPercentages(Map<Location, Long> locationTotals) {
+    private Map<Location, Map<FactName, Number>> indexLocationPercentages() {
 
-        Map<Location, Map<FactName, Number>> locationPercentages = new HashMap<Location, Map<FactName, Number>>();
+        locationPercentages = new HashMap<Location, Map<FactName, Number>>();
 
         for (Location location : locations)
             locationPercentages.put(location, factPercentagesFor(location, locationTotals));
@@ -118,7 +117,7 @@ class PopulationModelCreator {
         return Double.valueOf(df.format(percentage));
     }
 
-    private PieChartModel pieChartModel(Map<FactName, Long> factTotals) {
+    private PieChartModel pieChartModel() {
 
         PieChartModel pieChartModel = new PieChartModel(pieData(factTotals));
         configurePie(pieChartModel);
@@ -147,31 +146,31 @@ class PopulationModelCreator {
         return Math.min((int) Math.ceil(((double) pieChartModel.getData().size()) / 2), 3);
     }
 
-    private HorizontalBarChartModel barChartModel() {
+    private HorizontalBarChartModel barChartModel(Map<Location, Map<FactName, Number>> percentages) {
 
         HorizontalBarChartModel barChartModel = new HorizontalBarChartModel();
 
         for (FactName factName : factNames)
-            barChartModel.addSeries(createChartSeriesFor(factName));
+            barChartModel.addSeries(createChartSeriesFor(factName, percentages));
 
         configureBarChart(barChartModel);
 
         return barChartModel;
     }
 
-    private ChartSeries createChartSeriesFor(FactName factName) {
+    private ChartSeries createChartSeriesFor(FactName factName, Map<Location, Map<FactName, Number>> percentages) {
 
         ChartSeries chartSeries = new ChartSeries(factName.getDisplayName());
-        chartSeries.setData(locationDataFor(factName));
+        chartSeries.setData(locationDataFor(factName, percentages));
         return chartSeries;
     }
 
-    private Map<Object, Number> locationDataFor(FactName factName) {
+    private Map<Object, Number> locationDataFor(FactName factName, Map<Location, Map<FactName, Number>> percentages) {
 
         Map<Object, Number> locationData = new HashMap<Object, Number>();
 
         for (Location location : locations)
-            locationData.put(location.getLocationName(), location.factValueOf(factName));
+            locationData.put(location.getLocationName(), percentages.get(location).get(factName));
 
         return locationData;
     }
