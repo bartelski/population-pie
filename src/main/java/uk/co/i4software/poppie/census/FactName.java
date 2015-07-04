@@ -125,7 +125,64 @@ public enum FactName {
     PT_FIFTEEN_OR_LESS(120, "15 or less", 283),
     PT_SIXTEEN_THIRTY(121, "16-30", 434),
     FT_THIRTYONE_FORTYEIGHT(122, "31-48", 1735),
-    FT_FORTYNINE_PLUS(123, "49+", 518);
+    FT_FORTYNINE_PLUS(123, "49+", 518),
+
+    HIGHER_MANAGERIAL(144, "Higher Managerial", 854),
+    LOWER_MANAGERIAL(145, "Lower Managerial", 1161),
+    INTERMEDIATE(146, "Intermediate", 360),
+    SMALL_EMPLOYERS(147, "Small Employers", 385),
+    LOWER_SUPERVISORY(148, "Lower Supervisory", 220),
+    SEMI_ROUTINE(149, "Semi Routine", 369),
+    ROUTINE(150, "Routine", 272),
+    LONG_TERM_UNEMPLOYED(151, "Long Term Unemployed", 165),
+    STUDENTS(152, "Student", 942 ),
+
+    UNSHARED(154, "Unshared", 3584),
+    SHARED(155, "Shared", 29),
+
+    OCCUPIED(157, "Occupied", 3292),
+    UNOCCUPIED(158, "Unoccupied", 408),
+
+    DETACHED(159, "Detached", 50),
+    SEMI_DETACHED(160, "Semi-detached", 101),
+    TERRACED(161, "Terraced", 327),
+    PURPOSE_BUILT_FLATS(162, "Purpose Built Flats", 1156),
+    SHARED_HOUSE(163, "Shared House", 1733),
+    COMMERCIAL_BUILDING(164, "Commercial Building", 325),
+    CARAVAN(165, "Caravan", 8),
+
+    OWNED_OUTRIGHT(167, "Owned Outright", 583),
+    MORTGAGED(168, "Mortgaged", 385),
+    PART_OWNED(169, "Part Owned", 28),
+    LOCAL_AUTHORITY(170, "Local Authority", 79),
+    SOCIAL_OTHER(171, "Social Other", 633),
+    PRIVATE_LANDLORD(172, "Private Landlord", 1437),
+    PRIVATE_OTHER(173, "Private Other", 94),
+    RENT_FREE(174, "Living Rent Free", 53),
+
+    NONE(177, "No Central Heating", 198),
+    GAS(178, "Gas", 1948),
+    ELECTRIC(179, "Electric", 1010),
+    OIL(180, "Oil", 12),
+    SOLID_FUEL(181, "Solid Fuel", 2),
+    OTHER_CENTRAL_HEATING(182, "Other", 43),
+    TWO_OR_MORE_TYPES(183, "Two or more types", 79),
+
+    NO_CARS(184, "No cars in household", 1696),
+    ONE_CAR(185, "One car in household", 1281),
+    TWO_OR_MORE_CARS(186, "Two or more cars in household", 315),
+
+    ONE_PERSON(189, "One Person", 1825),
+    MARRIED_WITH_CHILDREN(190, "Married Children", 131),
+    MARRIED_NO_CHILDREN(191, "Married No Children", 421),
+    SAME_SEX_WITH_CHILDREN(192, "Same Sex Children", 0),
+    SAME_SEX_NO_CHILDREN(193, "Same Sex No Children", 11),
+    COHABITING_WITH_CHILDREN(194, "Cohabiting Children", 30),
+    COHABITING_NO_CHILDREN(195, "Cohabiting No Children", 341),
+    LONE_PARENT_WITH_CHILDREN(196, "Lone Parent Children", 73),
+    LONE_PARENT_NO_CHILDREN(197, "Lone Parent No Children", 46),
+    ALL_STUDENTS(198, "All Students", 168),
+    MULTI_OTHER(199, "Multi Occupancy Other", 246);
 
     @Getter private final String displayName;
     @Getter private final int jsonColumnNumber;

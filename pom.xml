@@ -126,7 +126,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://10.0.1.4:8080/manager/text</url>
+                    <url>http://populationpie.co.uk/manager/text</url>
                     <server>pp-server</server>
                     <path>/</path>
                 </configuration>
