@@ -19,11 +19,15 @@
     <h:head>
         <link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
         <h:outputStylesheet library="css" name="main.css"/>
+
     </h:head>
 
     <h:body>
+        <h:outputScript library="javascript" name="google-analytics.js" target="body"/>
+
         <pp:main locationTypes="#{mainController.locationTypes}"
                  factTypes="#{mainController.factTypes}"/>
+
     </h:body>
 
 </ui:composition>
