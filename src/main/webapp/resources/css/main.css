@@ -59,7 +59,7 @@
 }
 
 .pp-copyright {
-    float: right;
+    padding-left: 10px;
 }
 
 .pp-copyright-icon {
@@ -73,5 +73,6 @@
 }
 
 .pp-bathHacked {
-    padding-left: 10px;
+    float:right;
+
 }
