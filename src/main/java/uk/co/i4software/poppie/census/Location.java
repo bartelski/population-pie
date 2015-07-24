@@ -2,6 +2,7 @@ package uk.co.i4software.poppie.census;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,14 +25,13 @@ public class Location implements Serializable {
     @Getter private final List<Fact> facts;
     @Getter private final Map<FactName, Fact> factMap;
 
-    public Location(String locationName) {
-        this(locationName, new ArrayList<Fact>());
-    }
+    @Getter @Setter
+    private List<Location> childLocations = new ArrayList<Location>();
+
 
     public Location(String locationName, List<Fact> facts) {
         this.locationName = locationName;
         this.facts = facts;
-
         this.factMap = new HashMap<FactName, Fact>();
         indexFacts();
     }
@@ -39,7 +39,6 @@ public class Location implements Serializable {
     private void indexFacts() {
         for (Fact fact : facts)
             factMap.put(fact.getFactName(), fact);
-
     }
 
     public String toString() {
@@ -64,4 +63,5 @@ public class Location implements Serializable {
     public Long factValueOf(FactName factName) {
         return hasFact(factName) ? factMap.get(factName).getFactValue() : null;
     }
+
 }

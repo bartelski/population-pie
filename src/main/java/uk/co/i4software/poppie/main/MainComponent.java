@@ -2,7 +2,6 @@ package uk.co.i4software.poppie.main;
 
 import org.primefaces.model.TreeNode;
 import uk.co.i4software.poppie.census.Location;
-import uk.co.i4software.poppie.census.LocationType;
 
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UINamingContainer;
@@ -20,28 +19,20 @@ import java.util.List;
 public class MainComponent extends UINamingContainer {
 
 
-    private static final String LOCATION_TYPES_ATTR = "locationTypes";
+    private static final String ROOT_LOCATIONS_ATTR = "rootLocations";
     private static final String MAIN_MODEL = "MAIN_MODEL";
 
     @Override
     public void encodeBegin(FacesContext context) throws IOException {
         super.encodeBegin(context);
 
-        final MainModel mainModel = new MainModelCreator(locationTypes()).create();
+        final MainModel mainModel = new MainModelCreator(rootLocations()).create();
         setMainModel(mainModel);
     }
 
     @SuppressWarnings("unchecked")
-    private List<LocationType> locationTypes() {
-        return (List<LocationType>) getAttributes().get(LOCATION_TYPES_ATTR);
-    }
-
-    private void setMainModel(MainModel mainModel) {
-        getStateHelper().put(MAIN_MODEL, mainModel);
-    }
-
-    public MainModel getMainModel() {
-        return (MainModel) getStateHelper().get(MAIN_MODEL);
+    private List<Location> rootLocations() {
+        return (List<Location>) getAttributes().get(ROOT_LOCATIONS_ATTR);
     }
 
     public void onLocationsSelect() {
@@ -54,12 +45,20 @@ public class MainComponent extends UINamingContainer {
         mainModel.setSelectedLocations(selectedLocations);
     }
 
+    public MainModel getMainModel() {
+        return (MainModel) getStateHelper().get(MAIN_MODEL);
+    }
+
+    private void setMainModel(MainModel mainModel) {
+        getStateHelper().put(MAIN_MODEL, mainModel);
+    }
+
     private Location[] convertToLocationArray(TreeNode[] selectedTreeNodes) {
 
         Location[] selectedLocations = new Location[selectedTreeNodes.length];
 
-        for (int i=0; i<selectedTreeNodes.length; i++)
-            selectedLocations[i] = (Location)selectedTreeNodes[i].getData();
+        for (int i = 0; i < selectedTreeNodes.length; i++)
+            selectedLocations[i] = (Location) selectedTreeNodes[i].getData();
 
         return selectedLocations;
     }

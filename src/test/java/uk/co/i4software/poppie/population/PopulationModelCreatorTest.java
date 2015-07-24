@@ -58,27 +58,23 @@ public class PopulationModelCreatorTest {
 
     @Test
     public void testTableModel() {
-        testTableModel(ABBEY, ABBEY_TABLE_VALUES, ABBEY_TABLE_PERCENTAGES);
-    }
 
-    private void testTableModel(Location location, Number[] tableValues, Number[] tablePercentages) {
-
-        final PopulationModel populationModel = populationModel(new Location[]{location});
+        final PopulationModel populationModel = populationModel(new Location[]{ABBEY});
 
         for (int i = 0; i < FACT_NAMES.length; i++) {
-            assertEquals(tableValues[i], populationModel.valueOf(location, FACT_NAMES[i]));
-            assertEquals(tablePercentages[i], populationModel.percentageOf(location, FACT_NAMES[i]));
+            assertEquals(ABBEY_TABLE_VALUES[i], populationModel.valueOf(ABBEY, FACT_NAMES[i]));
+            assertEquals(ABBEY_TABLE_PERCENTAGES[i], populationModel.percentageOf(ABBEY, FACT_NAMES[i]));
         }
     }
 
     @Test
     public void testBarChartModel() {
-        testBarChartModelForLocations(ABBEY, ABBEY_TABLE_PERCENTAGES);
+        testBarChartModelForLocations();
     }
 
-    private void testBarChartModelForLocations(Location location, Number[] values) {
+    private void testBarChartModelForLocations() {
 
-        final PopulationModel populationModel = populationModel(new Location[] { location});
+        final PopulationModel populationModel = populationModel(new Location[]{ABBEY});
         final List<ChartSeries> chartSeriesList = populationModel.getBarChartModel().getSeries();
 
         for (int i = 0; i < FACT_NAMES.length; i++) {
@@ -86,10 +82,10 @@ public class PopulationModelCreatorTest {
             final ChartSeries chartSeries = chartSeriesList.get(i);
             final String factDisplayName = FACT_NAMES[i].getDisplayName();
             final String chartSeriesLabel = chartSeries.getLabel();
-            final Number chartValue = chartSeries.getData().get(location.getLocationName());
+            final Number chartValue = chartSeries.getData().get(ABBEY.getLocationName());
 
             assertEquals(factDisplayName, chartSeriesLabel);
-            assertEquals(values[i], chartValue);
+            assertEquals(ABBEY_TABLE_PERCENTAGES[i], chartValue);
 
         }
     }

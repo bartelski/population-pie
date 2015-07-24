@@ -88,14 +88,12 @@ class PopulationModelCreator {
         return locationTotal;
     }
 
-    private Map<Location, Map<FactName, Number>> indexLocationPercentages() {
+    private void indexLocationPercentages() {
 
         locationPercentages = new HashMap<Location, Map<FactName, Number>>();
 
         for (Location location : locations)
             locationPercentages.put(location, factPercentagesFor(location, locationTotals));
-
-        return locationPercentages;
     }
 
     private Map<FactName, Number> factPercentagesFor(Location location, Map<Location, Long> locationTotals) {

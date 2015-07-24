@@ -2,7 +2,7 @@ package uk.co.i4software.poppie.main;
 
 import uk.co.i4software.poppie.census.Census;
 import uk.co.i4software.poppie.census.FactType;
-import uk.co.i4software.poppie.census.LocationType;
+import uk.co.i4software.poppie.census.Location;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -25,8 +25,8 @@ public class MainController implements Serializable {
     @Inject
     private Census census;
 
-    public List<LocationType> getLocationTypes() {
-        return census.fetchLocationTypes();
+    public List<Location> getRootLocations() {
+        return census.fetchRootLocations();
     }
 
     public FactType[] getFactTypes() {

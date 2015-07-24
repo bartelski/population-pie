@@ -20,82 +20,135 @@ public class BathHackedCensus2011 extends BathHackedJsonLoader implements Census
 
     private static final String JSON_FILENAME = "/census2011.json";
 
-    private List<LocationType> locationTypes;
+    private List<Location> rootLocations;
 
     public BathHackedCensus2011() {
         super(JSON_FILENAME);
     }
 
-    public List<LocationType> fetchLocationTypes() {
-        if (locationTypes == null) createLocationTypes();
-        return locationTypes;
+    private static List<Fact> createFacts(JsonArray jsonArray) {
+        List<Fact> facts = new ArrayList<Fact>();
+
+        for (FactName factName : FactName.values()) {
+            facts.add(new Fact(factName, longAt(jsonArray, factName.getJsonColumnNumber())));
+        }
+        return facts;
+    }
+
+    public List<Location> fetchRootLocations() {
+        if (rootLocations == null) createRootLocations();
+        return rootLocations;
     }
 
     public FactType[] fetchFactTypes() {
         return FactType.values();
     }
 
-    private void createLocationTypes() {
-        convertLocationTypeMapToLocationTypes(locationTypeMap());
+    private void createRootLocations() {
+
+        Map<LocationType, List<Location>> locationTypeMap = locationTypeMap();
+
+
+        rootLocations = locationTypeMap.get(LocationType.COUNTRY);
+        Collections.sort(rootLocations, new LocationComparator());
+
+        final List<Location> localAuthorities = locationTypeMap.get(LocationType.LOCAL_AUTHORITY);
+        Collections.sort(localAuthorities, new LocationComparator());
+
+        final List<Location> wards = locationTypeMap.get(LocationType.WARD);
+        Collections.sort(wards, new LocationComparator());
+
+        final List<Location> outputAreas = locationTypeMap.get(LocationType.OUTPUT_AREA);
+        Collections.sort(outputAreas, new LocationComparator());
+
+        addOutputAreasToWards(outputAreas, wards);
+        addWardsToLocationAuthorties(wards, localAuthorities);
+        addLocalAuthoritiesToCountries(localAuthorities, rootLocations);
     }
 
-    private Map<String, List<Location>> locationTypeMap() {
+    private Map<LocationType, List<Location>> locationTypeMap() {
 
-        Map<String, List<Location>> locationTypeMap = new LinkedHashMap<String, List<Location>>();
+        Map<LocationType, List<Location>> locationTypeMap = new LinkedHashMap<LocationType, List<Location>>();
         buildDataStructure(locationTypeMap, new LocationTypeMapRowMapper());
 
         return locationTypeMap;
     }
 
-    private void convertLocationTypeMapToLocationTypes(Map<String, List<Location>> locationTypeMap) {
+    private void addOutputAreasToWards(List<Location> outputAreas, List<Location> wards) {
 
-        locationTypes = new ArrayList<LocationType>();
-
-        for (String locationTypeName : locationTypeMap.keySet()) {
-            final List<Location> locations = locationTypeMap.get(locationTypeName);
-            locationTypes.add(locationType(locationTypeName, locations));
-        }
+        for (Location ward : wards)
+            ward.setChildLocations(findChildOutputAreas(outputAreas, ward));
     }
 
-    private LocationType locationType(String locationType, List<Location> locations) {
-        Collections.sort(locations, new LocationComparator());
-        return new LocationType(locationType, locations);
+    private void addWardsToLocationAuthorties(List<Location> wards, List<Location> localAuthorities) {
+
+        for (Location localAuthority : localAuthorities)
+            localAuthority.setChildLocations(wards);
+    }
+
+    private void addLocalAuthoritiesToCountries(List<Location> localAuthorities, List<Location> countries) {
+        for (Location country : countries)
+            country.setChildLocations(localAuthorities);
+    }
+
+    private List<Location> findChildOutputAreas(List<Location> outputAreas, Location ward) {
+
+        List<Location> childOutputAreas = new ArrayList<Location>();
+
+        for (Location outputArea : outputAreas)
+            if (outputAreaIsInWard(outputArea, ward))
+                childOutputAreas.add(outputArea);
+
+        return childOutputAreas;
+    }
+
+    private boolean outputAreaIsInWard(Location outputArea, Location ward) {
+        return outputArea.getLocationName().contains(ward.getLocationName());
+    }
+
+    private enum LocationType {COUNTRY, LOCAL_AUTHORITY, WARD, OUTPUT_AREA, LOWER_SUPER_OUTPUT_AREA, UNKNOWN}
+
+    private static class LocationTypeMapRowMapper implements DataStructureRowMapper<Map<LocationType, List<Location>>> {
+
+        private static final int LOCATION_TYPE_COLUMN = 8;
+        private static final int LOCATION_NAME_COLUMN = 10;
+
+        public void mapRow(Map<LocationType, List<Location>> map, JsonArray jsonArray) {
+
+            String[] locationFields = stringsAt(jsonArray, LOCATION_TYPE_COLUMN, LOCATION_NAME_COLUMN);
+            if (isNull(locationFields)) return;
+
+            final LocationType locationType = toLocationType(locationFields[0]);
+
+            final String locationName = locationFields[1];
+            final List<Fact> facts = createFacts(jsonArray);
+
+            locationList(map, locationType).add(new Location(locationName, facts));
+        }
+
+        private LocationType toLocationType(String locationName) {
+
+            if (locationName.equals("Country")) return LocationType.COUNTRY;
+            if (locationName.equals("Local Authority")) return LocationType.LOCAL_AUTHORITY;
+            if (locationName.equals("Ward")) return LocationType.WARD;
+            if (locationName.equals("Lower Super Output Area")) return LocationType.LOWER_SUPER_OUTPUT_AREA;
+            if (locationName.equals("Output Area")) return LocationType.OUTPUT_AREA;
+
+            return LocationType.UNKNOWN;
+        }
+
+        private List<Location> locationList(Map<LocationType, List<Location>> map, LocationType locationType) {
+
+            if (!map.containsKey(locationType))
+                map.put(locationType, new ArrayList<Location>());
+
+            return map.get(locationType);
+        }
     }
 
     private class LocationComparator implements Comparator<Location> {
         public int compare(Location o1, Location o2) {
             return o1.getLocationName().compareTo(o2.getLocationName());
-        }
-    }
-
-    private static class LocationTypeMapRowMapper implements DataStructureRowMapper<Map<String,List<Location>>> {
-
-        private static final int LOCATION_TYPE_COLUMN = 8;
-        private static final int LOCATION_NAME_COLUMN = 10;
-
-        public void mapRow(Map<String, List<Location>> map, JsonArray jsonArray) {
-
-            String[] locationFields = stringsAt(jsonArray, LOCATION_TYPE_COLUMN, LOCATION_NAME_COLUMN);
-            if (isNull(locationFields)) return;
-
-            List<Fact> facts = new ArrayList<Fact>();
-
-            for (FactName factName : FactName.values()) {
-                facts.add(new Fact(factName, longAt(jsonArray, factName.getJsonColumnNumber())));
-            }
-
-            final String locationTypeName = locationFields[0];
-            final String locationName = locationFields[1];
-
-            locationList(map, locationTypeName).add(new Location(locationName, facts));
-        }
-
-        private List<Location> locationList(Map<String, List<Location>> map, String locationTypeName) {
-
-            if (!map.containsKey(locationTypeName))
-                map.put(locationTypeName, new ArrayList<Location>());
-
-            return map.get(locationTypeName);
         }
     }
 }

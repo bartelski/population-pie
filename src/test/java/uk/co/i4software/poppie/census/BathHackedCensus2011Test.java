@@ -27,33 +27,21 @@ public class BathHackedCensus2011Test {
     @ObjectUnderTest
     private BathHackedCensus2011 census2011;
 
-    private List<LocationType> locationTypes;
-    private List<Location> locations;
+    private List<Location> allLocations;
 
     @Before
     public void setup() {
-        locationTypes = census2011.fetchLocationTypes();
-        createLocations();
+
+        allLocations = new ArrayList<Location>();
+        createLocations(census2011.fetchRootLocations());
     }
 
-    private void createLocations() {
+    private void createLocations(List<Location> locations) {
 
-        locations = new ArrayList<Location>();
-
-        for (LocationType locationType : locationTypes)
-            locations.addAll(locationType.getLocations());
-    }
-
-    @Test
-    public void testLocationTypes() throws Exception {
-        final LocationType[] mockLocationTypes = {COUNTRY, LOCAL_AUTHORITY, WARD, LOWER_SUPER_OUTPUT_AREA, OUTPUT_AREA};
-        assertLocationTypes(mockLocationTypes, locationTypes);
-    }
-
-    private void assertLocationTypes(LocationType[] expected, List<LocationType> actual) {
-
-        for (int i = 0; i < expected.length; i++)
-            assertEquals(expected[i], actual.get(i));
+        for (Location location : locations) {
+            this.allLocations.add(location);
+            createLocations(location.getChildLocations());
+        }
     }
 
     @Test
@@ -63,10 +51,10 @@ public class BathHackedCensus2011Test {
         testLocation(BATH_AND_NORTH_EAST_SOMERSET);
         testLocation(ABBEY);
         testLocation(BATHAVON_NORTH);
-        testLocation(E00072588);
-        testLocation(E01014370);
+        testLocation(E00072563);
+        testLocation(E00072564);
 
-        assertEquals(737, locations.size());
+        assertEquals(622, allLocations.size());
     }
 
     private void testLocation(Location location) {
@@ -74,7 +62,7 @@ public class BathHackedCensus2011Test {
     }
 
     private Location actual(Location location) {
-        return locations.get(locations.indexOf(location));
+        return allLocations.get(allLocations.indexOf(location));
     }
 
     @Test
