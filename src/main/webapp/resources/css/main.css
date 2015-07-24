@@ -58,21 +58,22 @@
     height: 500px;
 }
 
-.pp-copyright {
-    padding-left: 10px;
+.pp-icon {
+    display: inline-block !important;
 }
 
-.pp-copyright-icon {
+.pp-copyright {
     display: inline-block !important;
+    padding-left:35%;
 }
 
 .pp-settingsIcon {
     max-width: 24px !important;
     max-height: 24px !important;
+    padding-right: 8px;
     float: left;
 }
 
 .pp-bathHacked {
     float:right;
-
 }
