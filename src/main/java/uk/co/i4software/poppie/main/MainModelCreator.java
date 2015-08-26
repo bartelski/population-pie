@@ -31,9 +31,9 @@ class MainModelCreator {
     }
 
     private void buildLocationTree(List<Location> locations, TreeNode treeNode) {
-
         for (Location location : locations) {
             TreeNode currentNode = new DefaultTreeNode(location, treeNode);
+            if (currentNode.getRowKey().length() <= 3) currentNode.setExpanded(true);
             buildLocationTree(location.getChildLocations(), currentNode);
         }
     }

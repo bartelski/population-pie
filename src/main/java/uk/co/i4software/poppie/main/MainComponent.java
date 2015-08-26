@@ -18,7 +18,6 @@ import java.util.List;
 @FacesComponent(value = "main")
 public class MainComponent extends UINamingContainer {
 
-
     private static final String ROOT_LOCATIONS_ATTR = "rootLocations";
     private static final String MAIN_MODEL = "MAIN_MODEL";
 
