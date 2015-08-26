@@ -13,11 +13,11 @@
 
 <ui:composition>
 
-    <p:dialog header="Welcome!" widgetVar="welcomeDialog" height="140" width="375" modal="true" resizable="false">
-        <span>Population Pie allows you to compare Census 2011 statistics for Administrative Wards across the Local Authority of Bath and North East Somerset.</span>
+    <p:dialog header="Welcome!" widgetVar="welcomeDialog" modal="true" resizable="false" styleClass="pp-dialog">
+        <span>Population Pie allows you to compare Census 2011 statistics for <br/>Administrative Wards in the Local Authority of Bath and North East Somerset.</span>
         <br/>
         <br/>
-        <span>Click the info <h:outputText styleClass="fa fa-info"/> button in the bottom left hand corner of the screen, for help on how to use the application.</span>
+        <span>Click the info <h:outputText styleClass="fa fa-info"/> button in the bottom left hand corner of the screen,<br/> for help on how to use the application.</span>
         <br/>
         <br/>
         <p:commandButton value="Ok" type="button" onclick="PF('welcomeDialog').hide();"/>
