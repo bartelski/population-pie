@@ -119,11 +119,11 @@ public class BathHackedCensus2011 extends BathHackedJsonLoader implements Census
             if (isNull(locationFields)) return;
 
             final LocationType locationType = toLocationType(locationFields[0]);
-
             final String locationName = locationFields[1];
+            final String displayName = toLocationDisplayName(locationType, locationName);
             final List<Fact> facts = createFacts(jsonArray);
 
-            locationList(map, locationType).add(new Location(locationName, facts));
+            locationList(map, locationType).add(new Location(locationName, displayName, facts));
         }
 
         private LocationType toLocationType(String locationName) {
@@ -135,6 +135,14 @@ public class BathHackedCensus2011 extends BathHackedJsonLoader implements Census
             if (locationName.equals("Output Area")) return LocationType.OUTPUT_AREA;
 
             return LocationType.UNKNOWN;
+        }
+
+        private String toLocationDisplayName(LocationType locationType, String locationName) {
+
+            if (locationType == LocationType.OUTPUT_AREA)
+                return locationName.split("ward: ")[1];
+            else
+                return locationName;
         }
 
         private List<Location> locationList(Map<LocationType, List<Location>> map, LocationType locationType) {

@@ -42,13 +42,12 @@ public class MockCensus implements Census {
             asList(BATHAVON_NORTH_MALES, BATHAVON_NORTH_0_4, BATHAVON_NORTH_45_64);
 
     public static final Location ENGLAND_AND_WALES = new Location("England and Wales", new ArrayList<Fact>());
-    public static final Location BATH_AND_NORTH_EAST_SOMERSET =
-            new Location("Bath and North East Somerset", new  ArrayList<Fact>());
+    public static final Location BATH_AND_NORTH_EAST_SOMERSET = new Location("Bath and North East Somerset", new  ArrayList<Fact>());
 
     public static final Location ABBEY = new Location("Abbey", ABBEY_FACTS);
     public static final Location BATHAVON_NORTH = new Location("Bathavon North", BATHAVON_NORTH_FACTS);
-    public static final Location E00072563 = new Location("Abbey ward: E00072563", new ArrayList<Fact>());
-    public static final Location E00072564 = new Location("Abbey ward: E00072564", new ArrayList<Fact>());
+    public static final Location E00072563 = new Location("Abbey ward: E00072563", "E00072563", new ArrayList<Fact>());
+    public static final Location E00072564 = new Location("Abbey ward: E00072564", "E00072564", new ArrayList<Fact>());
 
     private static final List<Location> LOCAL_AUTHORITIES = singletonList(BATH_AND_NORTH_EAST_SOMERSET);
     private static final List<Location> WARDS = asList(ABBEY, BATHAVON_NORTH);

@@ -59,6 +59,7 @@ public class BathHackedCensus2011Test {
 
     private void testLocation(Location location) {
         assertEquals(location, actual(location));
+        assertEquals(location.getDisplayName(), actual(location).getDisplayName());
     }
 
     private Location actual(Location location) {

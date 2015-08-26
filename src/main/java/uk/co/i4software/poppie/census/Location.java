@@ -22,15 +22,20 @@ public class Location implements Serializable {
     private static final long serialVersionUID = 1947698132369542867L;
 
     @Getter private final String locationName;
+    @Getter private final String displayName;
     @Getter private final List<Fact> facts;
-    @Getter private final Map<FactName, Fact> factMap;
 
+    @Getter private final Map<FactName, Fact> factMap;
     @Getter @Setter
     private List<Location> childLocations = new ArrayList<Location>();
 
-
     public Location(String locationName, List<Fact> facts) {
+        this(locationName, locationName, facts);
+    }
+
+    public Location(String locationName, String displayName, List<Fact> facts) {
         this.locationName = locationName;
+        this.displayName = displayName;
         this.facts = facts;
         this.factMap = new HashMap<FactName, Fact>();
         indexFacts();
@@ -42,7 +47,7 @@ public class Location implements Serializable {
     }
 
     public String toString() {
-        return locationName;
+        return displayName;
     }
 
     public List<Fact> factsFor(FactName... factNames) {
