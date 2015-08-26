@@ -9,18 +9,32 @@
  -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
 
     <ui:include src="info.xhtml"/>
 
-    <span><h:link onclick="PF('infoDialog').show();" styleClass="ui-icon fa fa-info pp-icon pp-infoIcon" outcome="#"/></span>
-    <span><h:outputLink value="mailto:david@i4-software.co.uk" title="Email me"><h:outputText styleClass="ui-icon fa fa-envelope-o pp-icon"/></h:outputLink></span>
-    <span><h:outputLink value="https://uk.linkedin.com/pub/david-barton/6/657/b6" title="Connect with me" target="_blank"><h:outputText styleClass="ui-icon fa fa-linkedin pp-icon"/></h:outputLink></span>
-    <span><h:outputLink value="https://twitter.com/populationpie" title="Follow me" target="_blank"><h:outputText styleClass="ui-icon fa fa-twitter pp-icon"/></h:outputLink></span>
-    <span class="pp-copyright"><h:outputText styleClass="ui-icon fa fa-copyright pp-icon"/>Copyright 2015, I4 Software Ltd. All rights reserved.</span>
-    <span class="pp-bathHacked">Data source: <h:outputLink value="http://data.bathhacked.org" target="_blank">BATH HACKED</h:outputLink></span>
+    <div style="text-align: center; padding-bottom:1em">
+
+        <span style="float:left;">
+            <h:outputLink onclick="PF('infoDialog').show();" styleClass="ui-icon fa fa-info pp-icon pp-infoIcon" value="#"/>
+            <h:outputLink value="mailto:david@i4-software.co.uk" title="Email me"><h:outputText styleClass="ui-icon fa fa-envelope-o pp-icon"/></h:outputLink>
+            <h:outputLink value="https://uk.linkedin.com/pub/david-barton/6/657/b6" title="Connect with me" target="_blank"><h:outputText styleClass="ui-icon fa fa-linkedin pp-icon"/></h:outputLink>
+            <h:outputLink value="https://twitter.com/populationpie" title="Follow me" target="_blank"><h:outputText styleClass="ui-icon fa fa-twitter pp-icon"/></h:outputLink>
+        </span>
+
+        <h:outputText styleClass="ui-icon fa fa-copyright pp-icon"/>Copyright 2015, I4 Software Ltd. All rights reserved.
+
+        <p:themeSwitcher id="basic" styleClass="pp-themeSwitcher" value="afterwork">
+            <f:selectItems value="#{mainController.themes}" var="theme"/>
+        </p:themeSwitcher>
+
+
+    </div>
+
 
 </ui:composition>
 

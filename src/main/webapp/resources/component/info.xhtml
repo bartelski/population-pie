@@ -14,7 +14,7 @@
 
 <ui:composition>
 
-    <p:dialog header="Help Information" widgetVar="infoDialog" height="225" width="625" resizable="false" position="right top">
+    <p:dialog header="Help Information" widgetVar="infoDialog" position="right top" styleClass="pp-infoDialog">
         <ul>
             <li>Select / de-select 1 or more locations using the tree control on the left.<br/><br/></li>
             <li>To select / de-select more than one location - whilst clicking:
@@ -30,8 +30,10 @@
                     <li>The bar chart compares the percentage for each location.<br/><br/></li>
                 </ul>
             </li>
-            <li>Use the social icons in the bottom left to say hello. <h:outputText styleClass="fa fa-smile-o"/></li>
+            <li>Use the social icons in the bottom left to say hello. <h:outputText styleClass="fa fa-smile-o"/><br/><br/></li>
+            <li>Use the theme switcher at the bottom right to change aesthetic.</li>
         </ul>
+        <span class="pp-bathHacked">Data hacked from the <h:outputLink value="http://data.bathhacked.org" target="_blank">BATH: HACKED datastore</h:outputLink></span>
     </p:dialog>
 
 </ui:composition>

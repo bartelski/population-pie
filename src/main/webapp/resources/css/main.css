@@ -8,6 +8,7 @@
 -->
 .ui-tree-container {
     position: absolute !important;
+    left:0;
 }
 
 .pp-southLayoutUnit > .ui-layout-unit-content  {
@@ -56,17 +57,24 @@
 
 .pp-icon {
     display: inline-block !important;
-    padding-left: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .pp-infoIcon {
-    padding-left: 4px;
     cursor: pointer;
+    text-decoration: none;
 }
 
-.pp-copyright {
-    display: inline-block !important;
-    padding-left:35%;
+.pp-bathHacked {
+    float:left;
+}
+
+.pp-themeSwitcher {
+    width:165px !important;
+    position:absolute !important;
+    top:0;
+    right:0;
 }
 
 .pp-pieIcon {
@@ -76,6 +84,7 @@
     float: left;
 }
 
-.pp-bathHacked {
-    float:right;
+.pp-infoDialog {
+    width:auto !important;
+    height:auto !important;
 }
