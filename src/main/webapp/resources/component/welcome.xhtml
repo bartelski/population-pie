@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+/**
+ * (c) Copyright i4 Software Ltd. All Rights Reserved.
+ *
+ * @author David Barton
+ * @since May 2015
+ */
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <p:dialog header="Welcome!" widgetVar="welcomeDialog" height="140" width="375" modal="true" resizable="false">
+        <span>Population Pie allows you to compare Census 2011 statistics for Administrative Wards across the Local Authority of Bath and North East Somerset.</span>
+        <br/>
+        <br/>
+        <span>Click the info <h:outputText styleClass="fa fa-info"/> button in the bottom left hand corner of the screen, for help on how to use the application.</span>
+        <br/>
+        <br/>
+        <p:commandButton value="Ok" type="button" onclick="PF('welcomeDialog').hide();"/>
+    </p:dialog>
+
+</ui:composition>
+
+</html>

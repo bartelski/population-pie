@@ -56,6 +56,12 @@
 
 .pp-icon {
     display: inline-block !important;
+    padding-left: 2px;
+}
+
+.pp-infoIcon {
+    padding-left: 4px;
+    cursor: pointer;
 }
 
 .pp-copyright {
@@ -63,7 +69,7 @@
     padding-left:35%;
 }
 
-.pp-settingsIcon {
+.pp-pieIcon {
     max-width: 24px !important;
     max-height: 24px !important;
     padding-right: 4px;

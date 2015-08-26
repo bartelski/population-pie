@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+/**
+ * (c) Copyright i4 Software Ltd. All Rights Reserved.
+ *
+ * @author David Barton
+ * @since August 2015
+ */
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"  >
+
+<ui:composition>
+
+    <p:dialog header="Help Information" widgetVar="infoDialog" height="225" width="625" resizable="false" position="right top">
+        <ul>
+            <li>Select / de-select 1 or more locations using the tree control on the left.<br/><br/></li>
+            <li>To select / de-select more than one location - whilst clicking:
+                <ul>
+                    <li>Hold down the ctrl on Windows.</li>
+                    <li>Hold down the cmd key on a Mac.<br/><br/></li>
+                </ul>
+            </li>
+            <li>Open up one or more dimensions to look at the Census data.
+                <ul>
+                    <li>The table shows raw count and percentage data for each location.</li>
+                    <li>The pie chart shows the aggregate percentage across the selected locations.</li>
+                    <li>The bar chart compares the percentage for each location.<br/><br/></li>
+                </ul>
+            </li>
+            <li>Use the social icons in the bottom left to say hello. <h:outputText styleClass="fa fa-smile-o"/></li>
+        </ul>
+    </p:dialog>
+
+</ui:composition>
+
+</html>

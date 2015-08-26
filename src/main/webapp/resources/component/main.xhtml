@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <!--
 /**
  * (c) Copyright i4 Software Ltd. All Rights Reserved.
@@ -23,24 +22,14 @@
 
 <composite:implementation>
 
-    <p:dialog header="Welcome to Population Pie!" widgetVar="welcomeDialog" height="200" width="400" modal="true" resizable="false">
-        <span>This application allows you to compare Census 2011 data for Administrative Wards across the Local Authority of Bath and North East Somerset.</span>
-        <br/>
-        <br/>
-        <span>Use the tree control on the left hand side to select or deselect locations. To select more than one location: whilst clicking the mouse, hold the ctrl key on Windows, or the cmd key on Apple Macs.</span>
-        <br/>
-        <br/>
-        <span>I hope you enjoy using this software. If you want to get in contact, please use the buttons in the bottom left hand corner.</span>
-    </p:dialog>
-
     <p:layout fullPage="true">
-
+        <ui:include src="welcome.xhtml"/>
         <p:layoutUnit id="westLayoutUnit" position="west" collapsible="true" resizable="true"
                       size="260" minSize="200">
 
             <f:facet name="header">
                 <img src="${pageContext.request.contextPath}/resources/images/3d-pie-chart-icon/pie-chart-128.png"
-                     title="Population Pie!" class="pp-settingsIcon"/>Locations
+                     title="Population Pie!" class="pp-pieIcon"/>Locations
             </f:facet>
             <h:form>
                 <p:tree value="#{cc.mainModel.locationTree}" var="node" selectionMode="multiple"
