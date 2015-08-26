@@ -23,27 +23,14 @@
 .pp-accordionPanel > .ui-accordion-content {
     padding-bottom: 0 !important;
 }
-.pp-chartLayout {
-    min-width: 100%;
-    height:525px;
-    overflow-y: hidden !important;
-}
-
-.pp-pieChartLayout {
-    min-width: 500px;
-}
 
 .pp-pieChartLayout > div {
     overflow:hidden !important;
 }
 
 .pp-pieChart {
-    min-width: 500px;
     height: 500px;
-}
-
-.pp-barChartLayout {
-    min-width: 800px;
+    width: 600px;
 }
 
 .pp-barChartLayout > div {
@@ -51,7 +38,6 @@
 }
 
 .pp-barChart {
-    min-width: 800px;
     height: 500px;
 }
 

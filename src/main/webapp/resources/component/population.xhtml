@@ -25,48 +25,51 @@
 
     <p:outputPanel rendered="#{cc.componentRendered}">
 
-        <p:dataTable value="#{cc.attrs.locations}" var="location" rowHover="true" resizableColumns="true"
-                     resizeMode="expand" tableStyle="width:auto; min-width: 100%">
+        <p:tabView dynamic="true" cache="true">
+            <p:tab title="Data Table">
 
-            <p:columnGroup type="header">
-                <p:row>
-                    <p:column headerText="Location" rowspan="2"/>
-                    <ui:repeat value="#{cc.attrs.factNames}" var="factName">
-                        <p:column headerText="#{factName.displayName}" colspan="2"/>
-                    </ui:repeat>
-                </p:row>
-                <p:row>
-                    <ui:repeat value="#{cc.attrs.factNames}" var="factName">
-                        <p:column headerText="#"/>
-                        <p:column headerText="%"/>
-                    </ui:repeat>
-                </p:row>
-            </p:columnGroup>
+                <p:dataTable value="#{cc.attrs.locations}" var="location" rowHover="true" resizableColumns="true"
+                             resizeMode="expand" tableStyle="width:auto; min-width: 100%">
 
-            <p:column>
-                <h:outputText value="#{location.locationName}"/>
-            </p:column>
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column headerText="Location" rowspan="2"/>
+                            <ui:repeat value="#{cc.attrs.factNames}" var="factName">
+                                <p:column headerText="#{factName.displayName}" colspan="2"/>
+                            </ui:repeat>
+                        </p:row>
+                        <p:row>
+                            <ui:repeat value="#{cc.attrs.factNames}" var="factName">
+                                <p:column headerText="#"/>
+                                <p:column headerText="%"/>
+                            </ui:repeat>
+                        </p:row>
+                    </p:columnGroup>
 
-            <c:forEach items="#{cc.attrs.factNames}" var="factName">
-                <p:column>
-                    <h:outputText value="#{cc.valueOf(location, factName)}"/>
-                </p:column>
-                <p:column>
-                    <h:outputText value="#{cc.percentageOf(location, factName)}"/>
-                </p:column>
-            </c:forEach>
+                    <p:column>
+                        <h:outputText value="#{location.locationName}"/>
+                    </p:column>
 
-        </p:dataTable>
+                    <c:forEach items="#{cc.attrs.factNames}" var="factName">
+                        <p:column>
+                            <h:outputText value="#{cc.valueOf(location, factName)}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{cc.percentageOf(location, factName)}"/>
+                        </p:column>
+                    </c:forEach>
 
-        <p:layout styleClass="pp-chartLayout">
-            <p:layoutUnit position="west" style="border:none; overflow: hidden" styleClass="pp-pieChartLayout">
-                    <p:chart type="pie" model="#{cc.pieChartModel}" styleClass="pp-pieChart"/>
+                </p:dataTable>
 
-            </p:layoutUnit>
-                <p:layoutUnit position="center" style="border:none" styleClass="pp-barChartLayout">
-                    <p:chart type="bar" model="#{cc.barChartModel}" styleClass="pp-barChart"/>
-                </p:layoutUnit>
-        </p:layout>
+            </p:tab>
+            <p:tab title="Pie Chart">
+                <p:chart type="pie" model="#{cc.pieChartModel}" styleClass="pp-pieChart"/>
+            </p:tab>
+            <p:tab title="Bar Chart">
+                <p:chart type="bar" model="#{cc.barChartModel}" styleClass="pp-barChart"/>
+            </p:tab>
+
+        </p:tabView>
 
     </p:outputPanel>
 

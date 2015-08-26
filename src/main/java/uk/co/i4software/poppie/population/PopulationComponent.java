@@ -68,6 +68,4 @@ public class PopulationComponent extends UINamingContainer {
         return getPopulationModel().percentageOf(location, factName);
     }
 
-
-
 }

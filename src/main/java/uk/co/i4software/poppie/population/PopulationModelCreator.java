@@ -2,6 +2,7 @@ package uk.co.i4software.poppie.population;
 
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
+import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.PieChartModel;
 import uk.co.i4software.poppie.census.Fact;
 import uk.co.i4software.poppie.census.FactName;
@@ -19,8 +20,8 @@ import java.util.*;
 class PopulationModelCreator {
 
     private static final boolean PIE_SHOW_DATA_LABELS = true;
-    private static final String PIE_LEGEND_POSITION = "n";
-    private static final String BAR_LEGEND_POSITION = "sw";
+    private static final String PIE_LEGEND_POSITION = "nw";
+    private static final String BAR_LEGEND_POSITION = "nw";
     private static final boolean BAR_STACKED = false;
     private static final String BAR_DATATIP_FORMAT = "%1$d";
     private static final boolean BAR_ANIMATED = true;
@@ -137,11 +138,7 @@ class PopulationModelCreator {
         pieChartModel.setShowDataLabels(PIE_SHOW_DATA_LABELS);
         pieChartModel.setLegendPosition(PIE_LEGEND_POSITION);
         pieChartModel.setDiameter(PIE_DIAMETER);
-        pieChartModel.setLegendCols(legendCols(pieChartModel));
-    }
-
-    private int legendCols(PieChartModel pieChartModel) {
-        return Math.min((int) Math.ceil(((double) pieChartModel.getData().size()) / 2), 3);
+        pieChartModel.setLegendCols(1);
     }
 
     private HorizontalBarChartModel barChartModel(Map<Location, Map<FactName, Number>> percentages) {
@@ -152,7 +149,6 @@ class PopulationModelCreator {
             barChartModel.addSeries(createChartSeriesFor(factName, percentages));
 
         configureBarChart(barChartModel);
-
         return barChartModel;
     }
 
@@ -175,6 +171,7 @@ class PopulationModelCreator {
 
     private void configureBarChart(HorizontalBarChartModel barChartModel) {
         barChartModel.setLegendPosition(BAR_LEGEND_POSITION);
+        barChartModel.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         barChartModel.setStacked(BAR_STACKED);
         barChartModel.setDatatipFormat(BAR_DATATIP_FORMAT);
         barChartModel.setAnimate(BAR_ANIMATED);
