@@ -23,7 +23,7 @@ import java.util.List;
 public class MainComponent extends UINamingContainer {
 
     private static final String ROOT_LOCATIONS_ATTR = "rootLocations";
-    // --Commented out by Inspection (01/09/15 18:21):private static final String SELECTED_LOCATIONS_ATTR = "selectedLocations";
+    private static final String INITIAL_LOCATIONS = "initialLocations";
     private static final String FACT_TYPES_ATTR = "factTypes";
     private static final String MAIN_MODEL = "MAIN_MODEL";
 
@@ -31,9 +31,7 @@ public class MainComponent extends UINamingContainer {
     public void encodeBegin(FacesContext context) throws IOException {
         super.encodeBegin(context);
 
-        final MainModel mainModel = new MainModelCreator(rootLocations(), factTypes()).create();
-        setMainModel(mainModel);
-
+        setMainModel(new MainModelCreator(rootLocations(), factTypes(), initialLocations()).create());
     }
 
     @SuppressWarnings("unchecked")
@@ -41,12 +39,16 @@ public class MainComponent extends UINamingContainer {
         return (List<Location>) getAttributes().get(ROOT_LOCATIONS_ATTR);
     }
 
+    private Location[] initialLocations() {
+        return (Location[]) getAttributes().get(INITIAL_LOCATIONS);
+    }
+
     public void onLocationsSelect() {
 
         final MainModel mainModel = getMainModel();
 
         final TreeNode[] selectedTreeNodes = mainModel.getSelectedTreeNodes();
-        final Location[] selectedLocations = convertToLocationArray(selectedTreeNodes);
+        final Location[] selectedLocations = toLocationArray(selectedTreeNodes);
 
         mainModel.updateModelForSelectedLocations(selectedLocations);
     }
@@ -59,12 +61,12 @@ public class MainComponent extends UINamingContainer {
         getStateHelper().put(MAIN_MODEL, mainModel);
     }
 
-    private Location[] convertToLocationArray(TreeNode[] selectedTreeNodes) {
+    private Location[] toLocationArray(TreeNode[] selectedTreeNodes) {
 
         Location[] selectedLocations = new Location[selectedTreeNodes.length];
 
         for (int i = 0; i < selectedTreeNodes.length; i++)
-            selectedLocations[i] = (Location) selectedTreeNodes[i].getData();
+            selectedLocations[i] = (Location)selectedTreeNodes[i].getData();
 
         return selectedLocations;
     }

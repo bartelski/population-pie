@@ -4,6 +4,7 @@ import uk.co.i4software.poppie.census.Census;
 import uk.co.i4software.poppie.census.FactType;
 import uk.co.i4software.poppie.census.Location;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,8 +32,18 @@ public class MainController implements Serializable {
     @Inject
     private Census census;
 
+    private List<Location> rootLocations;
+    private Location[] initialLocations;
+
+
+    @PostConstruct
+    public void init() {
+        rootLocations = census.fetchRootLocations();
+        initialLocations = new Location[] { rootLocations.get(0), rootLocations.get(0).getChildLocations().get(0)};
+    }
+
     public List<Location> getRootLocations() {
-        return census.fetchRootLocations();
+        return rootLocations;
     }
 
     public FactType[] getFactTypes() {
@@ -41,5 +52,9 @@ public class MainController implements Serializable {
 
     public String[] getThemes() {
         return THEMES;
+    }
+
+    public Location[] getInitialLocations() {
+        return initialLocations;
     }
 }

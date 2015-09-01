@@ -30,16 +30,17 @@ public class MainModel implements Serializable {
     @Getter private Location[] selectedLocations;
     private Map<FactType, FactModel> factModels;
 
-    public MainModel(TreeNode locationTree, FactType[] factTypes) {
+    public MainModel(TreeNode locationTree, FactType[] factTypes, Location[] initialLocations) {
         this.locationTree = locationTree;
         this.factTypes = factTypes;
+
+        updateModelForSelectedLocations(initialLocations);
     }
 
 
     public void updateModelForSelectedLocations(Location[] selectedLocations) {
         this.selectedLocations = selectedLocations;
         this.factModels = createFactModelsFor(selectedLocations);
-
     }
 
     private Map<FactType, FactModel> createFactModelsFor(Location[] selectedLocations) {
@@ -74,8 +75,7 @@ public class MainModel implements Serializable {
 
         private static final long serialVersionUID = -736078452584137611L;
 
-        @Getter
-        private final PieChartModel pieChartModel;
+        @Getter private final PieChartModel pieChartModel;
         @Getter private final HorizontalBarChartModel barChartModel;
 
         private final Map<Location, Map<FactName, Number>> locationPercentages;

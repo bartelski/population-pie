@@ -5,6 +5,7 @@ import org.primefaces.model.TreeNode;
 import uk.co.i4software.poppie.census.FactType;
 import uk.co.i4software.poppie.census.Location;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,10 +20,12 @@ class MainModelCreator {
 
     private final List<Location> rootLocations;
     private final FactType[] factTypes;
+    private final Location[] initialLocations;
 
-    public MainModelCreator(List<Location> rootLocations, FactType[] factTypes) {
+    public MainModelCreator(List<Location> rootLocations, FactType[] factTypes, Location[] initialLocations) {
         this.rootLocations = rootLocations;
         this.factTypes = factTypes;
+        this.initialLocations = initialLocations;
     }
 
     public MainModel create() {
@@ -30,15 +33,23 @@ class MainModelCreator {
         TreeNode treeRoot = new DefaultTreeNode(LOCATION_TREE);
         buildLocationTree(rootLocations, treeRoot);
 
-        return new MainModel(treeRoot, factTypes);
+        return new MainModel(treeRoot, factTypes, initialLocations);
     }
 
     private void buildLocationTree(List<Location> locations, TreeNode treeNode) {
         for (Location location : locations) {
-            TreeNode currentNode = new DefaultTreeNode(location, treeNode);
-            if (currentNode.getRowKey().length() <= 3) currentNode.setExpanded(true);
-            buildLocationTree(location.getChildLocations(), currentNode);
+            buildLocationTree(location, treeNode);
         }
+    }
+
+    private void buildLocationTree(Location location, TreeNode treeNode) {
+
+        TreeNode currentNode = new DefaultTreeNode(location, treeNode);
+
+        if (currentNode.getRowKey().length() <= 3) currentNode.setExpanded(true);
+        if (Arrays.asList(initialLocations).contains(location)) currentNode.setSelected(true);
+
+        buildLocationTree(location.getChildLocations(), currentNode);
     }
 
 }
