@@ -31,7 +31,7 @@ public class MainModelCreatorTest {
     @Test
     public void testCreate() throws Exception {
 
-        mainModel = new MainModelCreator(mockCensus.fetchRootLocations()).create();
+        mainModel = new MainModelCreator(mockCensus.fetchRootLocations(), mockCensus.fetchFactTypes()).create();
 
         assertEquals(TREE_ROOT, mainModel.getLocationTree());
         assertArrayEquals(FactType.values(), mainModel.getFactTypes());

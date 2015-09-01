@@ -38,7 +38,7 @@ public class FactModelCreatorTest {
 
     private void testPieChartModel(Location[] locations, Number[] values) {
 
-        final FactModel factModel = factModel(locations);
+        final MainModel.FactModel factModel = factModel(locations);
         final Map<String, Number> pieData = factModel.getPieChartModel().getData();
 
         for (int i = 0; i < FACT_NAMES.length; i++) {
@@ -47,7 +47,7 @@ public class FactModelCreatorTest {
         }
     }
 
-    private FactModel factModel(Location[] locations) {
+    private MainModel.FactModel factModel(Location[] locations) {
         return new FactModelCreator(locations, FACT_NAMES).create();
     }
 
@@ -59,7 +59,7 @@ public class FactModelCreatorTest {
     @Test
     public void testTableModel() {
 
-        final FactModel factModel = factModel(new Location[]{ABBEY});
+        final MainModel.FactModel factModel = factModel(new Location[]{ABBEY});
 
         for (int i = 0; i < FACT_NAMES.length; i++) {
             assertEquals(ABBEY_TABLE_VALUES[i], factModel.valueOf(ABBEY, FACT_NAMES[i]));
@@ -74,7 +74,7 @@ public class FactModelCreatorTest {
 
     private void testBarChartModelForLocations() {
 
-        final FactModel factModel = factModel(new Location[]{ABBEY});
+        final MainModel.FactModel factModel = factModel(new Location[]{ABBEY});
         final List<ChartSeries> chartSeriesList = factModel.getBarChartModel().getSeries();
 
         for (int i = 0; i < FACT_NAMES.length; i++) {

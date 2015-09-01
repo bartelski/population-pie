@@ -11,9 +11,7 @@ import javax.faces.component.FacesComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * (c) Copyright i4 Software Ltd. All Rights Reserved.
@@ -25,6 +23,7 @@ import java.util.Map;
 public class MainComponent extends UINamingContainer {
 
     private static final String ROOT_LOCATIONS_ATTR = "rootLocations";
+    // --Commented out by Inspection (01/09/15 18:21):private static final String SELECTED_LOCATIONS_ATTR = "selectedLocations";
     private static final String FACT_TYPES_ATTR = "factTypes";
     private static final String MAIN_MODEL = "MAIN_MODEL";
 
@@ -32,8 +31,9 @@ public class MainComponent extends UINamingContainer {
     public void encodeBegin(FacesContext context) throws IOException {
         super.encodeBegin(context);
 
-        final MainModel mainModel = new MainModelCreator(rootLocations()).create();
+        final MainModel mainModel = new MainModelCreator(rootLocations(), factTypes()).create();
         setMainModel(mainModel);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -48,7 +48,7 @@ public class MainComponent extends UINamingContainer {
         final TreeNode[] selectedTreeNodes = mainModel.getSelectedTreeNodes();
         final Location[] selectedLocations = convertToLocationArray(selectedTreeNodes);
 
-        mainModel.setSelectedLocationsAndFactModels(selectedLocations, createFactModels(selectedLocations));
+        mainModel.updateModelForSelectedLocations(selectedLocations);
     }
 
     private MainModel getMainModel() {
@@ -79,16 +79,6 @@ public class MainComponent extends UINamingContainer {
 
     public void setSelectedTreeNodes(TreeNode[] selectedTreeNodes) {
         getMainModel().setSelectedTreeNodes(selectedTreeNodes);
-    }
-
-    private Map<FactType, FactModel> createFactModels(Location[] selectedLocations) {
-
-        Map<FactType, FactModel> factModels = new HashMap<FactType, FactModel>();
-
-        for (FactType factType : factTypes())
-            factModels.put(factType, new FactModelCreator(selectedLocations, factType.getFactNames()).create());
-
-        return factModels;
     }
 
     private FactType[] factTypes() {
