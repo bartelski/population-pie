@@ -22,12 +22,14 @@ import java.util.Map;
 class FactModelCreator {
 
     private static final boolean PIE_SHOW_DATA_LABELS = true;
-    private static final String PIE_LEGEND_POSITION = "nw";
-    private static final String BAR_LEGEND_POSITION = "nw";
+    private static final String PIE_LEGEND_POSITION = "s";
+    private static final String BAR_LEGEND_POSITION = "s";
     private static final boolean BAR_STACKED = false;
     private static final String BAR_DATATIP_FORMAT = "%1$d";
     private static final boolean BAR_ANIMATED = true;
     private static final int PIE_DIAMETER = 325;
+    private static final int PIE_LEGEND_ROWS = 1;
+    private static final int BAR_LEGEND_ROWS = 1;
 
     private final Location[] locations;
     private final FactName[] factNames;
@@ -140,7 +142,7 @@ class FactModelCreator {
         pieChartModel.setShowDataLabels(PIE_SHOW_DATA_LABELS);
         pieChartModel.setLegendPosition(PIE_LEGEND_POSITION);
         pieChartModel.setDiameter(PIE_DIAMETER);
-        pieChartModel.setLegendCols(1);
+        pieChartModel.setLegendRows(PIE_LEGEND_ROWS);
     }
 
     private HorizontalBarChartModel barChartModel(Map<Location, Map<FactName, Number>> percentages) {
@@ -177,6 +179,7 @@ class FactModelCreator {
         barChartModel.setStacked(BAR_STACKED);
         barChartModel.setDatatipFormat(BAR_DATATIP_FORMAT);
         barChartModel.setAnimate(BAR_ANIMATED);
+        barChartModel.setLegendRows(BAR_LEGEND_ROWS);
     }
 
 }
