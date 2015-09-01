@@ -34,13 +34,6 @@ public class MainComponent extends UINamingContainer {
 
         final MainModel mainModel = new MainModelCreator(rootLocations()).create();
         setMainModel(mainModel);
-
-
-
-    //    final TreeNode[] treeNodes = {this.getLocationTree(), this.getLocationTree().getChildren().get(0)};
-    //    mainModel.setSelectedTreeNodes( treeNodes);
-    //    onLocationsSelect();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -122,17 +115,16 @@ public class MainComponent extends UINamingContainer {
         return getMainModel().getSelectedLocations();
     }
 
-    public boolean isPieChartTabDisabled() {
-        return isChartTabsDisabled();
+    public boolean isPieChartRendered() {
+        return areChartsRendered();
     }
 
-    public boolean isBarChartTabDisabled() {
-        return isChartTabsDisabled();
+    public boolean isBarChartRendered() {
+        return areChartsRendered();
     }
 
-    private boolean isChartTabsDisabled() {
-        return getSelectedLocations() == null || getSelectedLocations().length == 0;
+    private boolean areChartsRendered() {
+        return ! (getSelectedLocations() == null || getSelectedLocations().length == 0);
     }
-
 
 }

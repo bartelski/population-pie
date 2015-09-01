@@ -34,9 +34,11 @@
                 <p:tree value="#{cc.locationTree}" var="node" selectionMode="multiple"
                         selection="#{cc.selectedTreeNodes}" styleClass="pp-tree">
 
-                    <p:ajax event="select" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
+                    <p:ajax event="select" listener="#{cc.onLocationsSelect}"
+                            update="@([id$=dataTable],[id$=pieChart],[id$=barChart])"
                             onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
-                    <p:ajax event="unselect" listener="#{cc.onLocationsSelect}" update="@([id$=population])"
+                    <p:ajax event="unselect" listener="#{cc.onLocationsSelect}"
+                            update="@([id$=dataTable],[id$=pieChart],[id$=barChart])"
                             onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
 
                     <p:treeNode><h:outputText value="#{node}"/></p:treeNode>
@@ -53,45 +55,50 @@
                         <p:outputPanel id="#{factType}-population">
                             <p:tabView dynamic="true" cache="true">
                                 <p:tab title="Data Table">
-                                    <p:dataTable value="#{cc.selectedLocations}" var="location" rowHover="true"
-                                                 tableStyle="width:auto; min-width: 100%">
-                                        <p:columnGroup type="header">
-                                            <p:row>
-                                                <p:column headerText="Location" rowspan="2" width="300"/>
-                                                <ui:repeat value="#{factType.factNames}" var="factName">
-                                                    <p:column headerText="#{factName.displayName}" colspan="2"/>
-                                                </ui:repeat>
-                                            </p:row>
-                                            <p:row>
-                                                <ui:repeat value="#{factType.factNames}" var="factName">
-                                                    <p:column headerText="#"/>
-                                                    <p:column headerText="%"/>
-                                                </ui:repeat>
-                                            </p:row>
-                                        </p:columnGroup>
-                                        <p:column>
-                                            <h:outputText value="#{location.locationName}"/>
-                                        </p:column>
-
-                                        <c:forEach items="#{factType.factNames}" var="factName">
+                                    <p:outputPanel id="dataTable">
+                                        <p:dataTable value="#{cc.selectedLocations}" var="location" rowHover="true"
+                                                     tableStyle="width:auto; min-width: 100%">
+                                            <p:columnGroup type="header">
+                                                <p:row>
+                                                    <p:column headerText="Location" rowspan="2" width="300"/>
+                                                    <ui:repeat value="#{factType.factNames}" var="factName">
+                                                        <p:column headerText="#{factName.displayName}" colspan="2"/>
+                                                    </ui:repeat>
+                                                </p:row>
+                                                <p:row>
+                                                    <ui:repeat value="#{factType.factNames}" var="factName">
+                                                        <p:column headerText="#"/>
+                                                        <p:column headerText="%"/>
+                                                    </ui:repeat>
+                                                </p:row>
+                                            </p:columnGroup>
                                             <p:column>
-                                                <h:outputText value="#{cc.valueOf(location, factType, factName)}"/>
+                                                <h:outputText value="#{location.locationName}"/>
                                             </p:column>
-                                            <p:column>
-                                                <h:outputText value="#{cc.percentageOf(location, factType, factName)}"/>
-                                            </p:column>
-                                        </c:forEach>
-
-                                    </p:dataTable>
-
+                                            <c:forEach items="#{factType.factNames}" var="factName">
+                                                <p:column>
+                                                    <h:outputText value="#{cc.valueOf(location, factType, factName)}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:outputText
+                                                            value="#{cc.percentageOf(location, factType, factName)}"/>
+                                                </p:column>
+                                            </c:forEach>
+                                        </p:dataTable>
+                                    </p:outputPanel>
                                 </p:tab>
-                                <p:tab title="Pie Chart" disabled="#{cc.pieChartTabDisabled}">
-                                    <p:chart type="pie" model="#{cc.pieChartModelFor(factType)}"
-                                             styleClass="pp-pieChart"/>
+                                <p:tab title="Pie Chart">
+                                    <p:outputPanel id="pieChart">
+                                        <p:chart type="pie" model="#{cc.pieChartModelFor(factType)}"
+                                                 rendered="#{cc.pieChartRendered}" styleClass="pp-pieChart"/>
+                                    </p:outputPanel>
                                 </p:tab>
-                                <p:tab title="Bar Chart" disabled="#{cc.barChartTabDisabled}">
-                                    <p:chart type="bar" model="#{cc.barChartModelFor(factType)}"
-                                             styleClass="pp-barChart"/>
+
+                                <p:tab title="Bar Chart">
+                                    <p:outputPanel id="barChart">
+                                        <p:chart type="bar" model="#{cc.barChartModelFor(factType)}"
+                                                 rendered="#{cc.barChartRendered}" styleClass="pp-barChart"/>
+                                    </p:outputPanel>
                                 </p:tab>
 
                             </p:tabView>
