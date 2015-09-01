@@ -54,11 +54,10 @@
                             <p:tabView dynamic="true" cache="true">
                                 <p:tab title="Data Table">
                                     <p:dataTable value="#{cc.selectedLocations}" var="location" rowHover="true"
-                                                 resizableColumns="true"
-                                                 resizeMode="expand" tableStyle="width:auto; min-width: 100%">
+                                                 tableStyle="width:auto; min-width: 100%">
                                         <p:columnGroup type="header">
                                             <p:row>
-                                                <p:column headerText="Location" rowspan="2"/>
+                                                <p:column headerText="Location" rowspan="2" width="300"/>
                                                 <ui:repeat value="#{factType.factNames}" var="factName">
                                                     <p:column headerText="#{factName.displayName}" colspan="2"/>
                                                 </ui:repeat>
