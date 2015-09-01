@@ -11,6 +11,7 @@ import uk.co.i4software.poppie.census.Location;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,14 +32,14 @@ class FactModelCreator {
     private static final int PIE_LEGEND_COLS = 1;
     private static final int BAR_LEGEND_ROWS = 1;
 
-    private final Location[] locations;
+    private final List<Location> locations;
     private final FactName[] factNames;
     private Map<FactName, Long> factTotals;
     private Map<Location, Long> locationTotals;
     private Map<Location, Map<FactName, Number>> locationPercentages;
 
 
-    public FactModelCreator(Location[] locations, FactName[] factNames) {
+    public FactModelCreator(List<Location> locations, FactName[] factNames) {
         this.locations = locations;
         this.factNames = factNames;
     }

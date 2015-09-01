@@ -11,6 +11,7 @@ import javax.faces.component.FacesComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,9 +49,8 @@ public class MainComponent extends UINamingContainer {
         final MainModel mainModel = getMainModel();
 
         final TreeNode[] selectedTreeNodes = mainModel.getSelectedTreeNodes();
-        final Location[] selectedLocations = toLocationArray(selectedTreeNodes);
 
-        mainModel.updateModelForSelectedLocations(selectedLocations);
+        mainModel.updateModelForSelectedLocations(toLocations(selectedTreeNodes));
     }
 
     private MainModel getMainModel() {
@@ -61,12 +61,12 @@ public class MainComponent extends UINamingContainer {
         getStateHelper().put(MAIN_MODEL, mainModel);
     }
 
-    private Location[] toLocationArray(TreeNode[] selectedTreeNodes) {
+    private List<Location> toLocations(TreeNode[] selectedTreeNodes) {
 
-        Location[] selectedLocations = new Location[selectedTreeNodes.length];
+        List<Location> selectedLocations = new ArrayList<Location>();
 
-        for (int i = 0; i < selectedTreeNodes.length; i++)
-            selectedLocations[i] = (Location)selectedTreeNodes[i].getData();
+        for (TreeNode selectedTreeNode : selectedTreeNodes)
+            selectedLocations.add((Location) selectedTreeNode.getData());
 
         return selectedLocations;
     }
@@ -103,9 +103,10 @@ public class MainComponent extends UINamingContainer {
         return getMainModel().percentageOf(location, factType, factName);
     }
 
-    public Location[] getSelectedLocations() {
+    public List<Location> getSelectedLocations() {
         return getMainModel().getSelectedLocations();
     }
+
 
     public boolean isPieChartRendered() {
         return areChartsRendered();
@@ -116,7 +117,7 @@ public class MainComponent extends UINamingContainer {
     }
 
     private boolean areChartsRendered() {
-        return ! (getSelectedLocations() == null || getSelectedLocations().length == 0);
+        return ! (getSelectedLocations() == null || getSelectedLocations().size() == 0);
     }
 
 }

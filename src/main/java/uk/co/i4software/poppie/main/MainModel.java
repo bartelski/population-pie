@@ -10,7 +10,9 @@ import uk.co.i4software.poppie.census.FactType;
 import uk.co.i4software.poppie.census.Location;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,23 +29,23 @@ public class MainModel implements Serializable {
     @Getter private final FactType[] factTypes;
     @Getter @Setter private TreeNode[] selectedTreeNodes;
 
-    @Getter private Location[] selectedLocations;
+    @Getter private List<Location> selectedLocations;
     private Map<FactType, FactModel> factModels;
 
     public MainModel(TreeNode locationTree, FactType[] factTypes, Location[] initialLocations) {
         this.locationTree = locationTree;
         this.factTypes = factTypes;
 
-        updateModelForSelectedLocations(initialLocations);
+        updateModelForSelectedLocations(Arrays.asList(initialLocations));
     }
 
 
-    public void updateModelForSelectedLocations(Location[] selectedLocations) {
+    public void updateModelForSelectedLocations(List<Location> selectedLocations) {
         this.selectedLocations = selectedLocations;
         this.factModels = createFactModelsFor(selectedLocations);
     }
 
-    private Map<FactType, FactModel> createFactModelsFor(Location[] selectedLocations) {
+    private Map<FactType, FactModel> createFactModelsFor(List<Location> selectedLocations) {
 
         Map<FactType, FactModel> factModels = new HashMap<FactType, FactModel>();
 

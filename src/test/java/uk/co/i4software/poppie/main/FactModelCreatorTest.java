@@ -5,6 +5,8 @@ import org.primefaces.model.chart.ChartSeries;
 import uk.co.i4software.poppie.census.FactName;
 import uk.co.i4software.poppie.census.Location;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +25,8 @@ import static uk.co.i4software.poppie.census.MockCensus.BATHAVON_NORTH;
 public class FactModelCreatorTest {
 
     private static final FactName[] FACT_NAMES = AGES.getFactNames();
-    private static final Location[] SINGLE_LOCATION = new Location[]{ABBEY};
-    private static final Location[] MULTIPLE_LOCATIONS = new Location[]{ABBEY, BATHAVON_NORTH};
+    private static final List<Location> SINGLE_LOCATION = Collections.singletonList(ABBEY);
+    private static final List<Location> MULTIPLE_LOCATIONS = Arrays.asList(ABBEY, BATHAVON_NORTH);
     private static final Number[] SINGLE_LOCATION_PIE_VALUES = {141L, 104L, 102L, 1181L, 2018L, 1148L, 381L, 595L};
     private static final Number[] MULTIPLE_LOCATION_PIE_VALUES = {468L, 104L, 102L, 1181L, 2018L, 3312L, 381L, 595L};
 
@@ -36,7 +38,7 @@ public class FactModelCreatorTest {
         testPieChartModel(SINGLE_LOCATION, SINGLE_LOCATION_PIE_VALUES);
     }
 
-    private void testPieChartModel(Location[] locations, Number[] values) {
+    private void testPieChartModel(List<Location> locations, Number[] values) {
 
         final MainModel.FactModel factModel = factModel(locations);
         final Map<String, Number> pieData = factModel.getPieChartModel().getData();
@@ -47,7 +49,7 @@ public class FactModelCreatorTest {
         }
     }
 
-    private MainModel.FactModel factModel(Location[] locations) {
+    private MainModel.FactModel factModel(List<Location> locations) {
         return new FactModelCreator(locations, FACT_NAMES).create();
     }
 
@@ -59,7 +61,7 @@ public class FactModelCreatorTest {
     @Test
     public void testTableModel() {
 
-        final MainModel.FactModel factModel = factModel(new Location[]{ABBEY});
+        final MainModel.FactModel factModel = factModel(Collections.singletonList(ABBEY));
 
         for (int i = 0; i < FACT_NAMES.length; i++) {
             assertEquals(ABBEY_TABLE_VALUES[i], factModel.valueOf(ABBEY, FACT_NAMES[i]));
@@ -74,7 +76,7 @@ public class FactModelCreatorTest {
 
     private void testBarChartModelForLocations() {
 
-        final MainModel.FactModel factModel = factModel(new Location[]{ABBEY});
+        final MainModel.FactModel factModel = factModel(Collections.singletonList(ABBEY));
         final List<ChartSeries> chartSeriesList = factModel.getBarChartModel().getSeries();
 
         for (int i = 0; i < FACT_NAMES.length; i++) {

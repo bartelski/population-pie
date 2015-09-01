@@ -61,7 +61,9 @@
                                                      tableStyle="width:auto; min-width: 100%">
                                             <p:columnGroup type="header">
                                                 <p:row>
-                                                    <p:column headerText="Location" rowspan="2" width="300" styleClass="pp-locationColumn"/>
+                                                    <p:column headerText="Location" rowspan="2" width="300"
+                                                              sortBy="#{location.locationName}"
+                                                              styleClass="pp-locationColumn"/>
                                                     <ui:repeat value="#{factType.factNames}" var="factName">
                                                         <p:column headerText="#{factName.displayName}" colspan="2"/>
                                                     </ui:repeat>
