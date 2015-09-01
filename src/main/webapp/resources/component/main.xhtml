@@ -76,12 +76,11 @@
                                                 <h:outputText value="#{location.locationName}"/>
                                             </p:column>
                                             <c:forEach items="#{factType.factNames}" var="factName">
-                                                <p:column>
+                                                <p:column styleClass="pp-column">
                                                     <h:outputText value="#{cc.valueOf(location, factType, factName)}"/>
                                                 </p:column>
-                                                <p:column>
-                                                    <h:outputText
-                                                            value="#{cc.percentageOf(location, factType, factName)}"/>
+                                                <p:column styleClass="pp-column">
+                                                    <h:outputText value="#{cc.percentageOf(location, factType, factName)}"/>
                                                 </p:column>
                                             </c:forEach>
                                         </p:dataTable>

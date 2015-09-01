@@ -24,6 +24,10 @@
     padding-bottom: 0 !important;
 }
 
+.pp-column {
+    text-align: center;
+}
+
 .pp-pieChartLayout > div {
     overflow:hidden !important;
 }
