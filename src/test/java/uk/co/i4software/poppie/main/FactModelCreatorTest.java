@@ -1,4 +1,4 @@
-package uk.co.i4software.poppie.population;
+package uk.co.i4software.poppie.main;
 
 import org.junit.Test;
 import org.primefaces.model.chart.ChartSeries;
@@ -20,7 +20,7 @@ import static uk.co.i4software.poppie.census.MockCensus.BATHAVON_NORTH;
  * @author David Barton
  * @since June 2015
  */
-public class PopulationModelCreatorTest {
+public class FactModelCreatorTest {
 
     private static final FactName[] FACT_NAMES = AGES.getFactNames();
     private static final Location[] SINGLE_LOCATION = new Location[]{ABBEY};
@@ -38,8 +38,8 @@ public class PopulationModelCreatorTest {
 
     private void testPieChartModel(Location[] locations, Number[] values) {
 
-        final PopulationModel populationModel = populationModel(locations);
-        final Map<String, Number> pieData = populationModel.getPieChartModel().getData();
+        final FactModel factModel = factModel(locations);
+        final Map<String, Number> pieData = factModel.getPieChartModel().getData();
 
         for (int i = 0; i < FACT_NAMES.length; i++) {
             assertTrue(pieData.containsKey(FACT_NAMES[i].getDisplayName()));
@@ -47,8 +47,8 @@ public class PopulationModelCreatorTest {
         }
     }
 
-    private PopulationModel populationModel(Location[] locations) {
-        return new PopulationModelCreator(locations, FACT_NAMES).create();
+    private FactModel factModel(Location[] locations) {
+        return new FactModelCreator(locations, FACT_NAMES).create();
     }
 
     @Test
@@ -59,11 +59,11 @@ public class PopulationModelCreatorTest {
     @Test
     public void testTableModel() {
 
-        final PopulationModel populationModel = populationModel(new Location[]{ABBEY});
+        final FactModel factModel = factModel(new Location[]{ABBEY});
 
         for (int i = 0; i < FACT_NAMES.length; i++) {
-            assertEquals(ABBEY_TABLE_VALUES[i], populationModel.valueOf(ABBEY, FACT_NAMES[i]));
-            assertEquals(ABBEY_TABLE_PERCENTAGES[i], populationModel.percentageOf(ABBEY, FACT_NAMES[i]));
+            assertEquals(ABBEY_TABLE_VALUES[i], factModel.valueOf(ABBEY, FACT_NAMES[i]));
+            assertEquals(ABBEY_TABLE_PERCENTAGES[i], factModel.percentageOf(ABBEY, FACT_NAMES[i]));
         }
     }
 
@@ -74,8 +74,8 @@ public class PopulationModelCreatorTest {
 
     private void testBarChartModelForLocations() {
 
-        final PopulationModel populationModel = populationModel(new Location[]{ABBEY});
-        final List<ChartSeries> chartSeriesList = populationModel.getBarChartModel().getSeries();
+        final FactModel factModel = factModel(new Location[]{ABBEY});
+        final List<ChartSeries> chartSeriesList = factModel.getBarChartModel().getSeries();
 
         for (int i = 0; i < FACT_NAMES.length; i++) {
 

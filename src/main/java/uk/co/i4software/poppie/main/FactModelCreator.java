@@ -1,4 +1,4 @@
-package uk.co.i4software.poppie.population;
+package uk.co.i4software.poppie.main;
 
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
@@ -9,7 +9,9 @@ import uk.co.i4software.poppie.census.FactName;
 import uk.co.i4software.poppie.census.Location;
 
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * (c) Copyright i4 Software Ltd. All Rights Reserved.
@@ -17,7 +19,7 @@ import java.util.*;
  * @author David Barton
  * @since June 2015
  */
-class PopulationModelCreator {
+class FactModelCreator {
 
     private static final boolean PIE_SHOW_DATA_LABELS = true;
     private static final String PIE_LEGEND_POSITION = "nw";
@@ -34,19 +36,19 @@ class PopulationModelCreator {
     private Map<Location, Map<FactName, Number>> locationPercentages;
 
 
-    public PopulationModelCreator(Location[] locations, FactName[] factNames) {
+    public FactModelCreator(Location[] locations, FactName[] factNames) {
         this.locations = locations;
         this.factNames = factNames;
     }
 
-    public PopulationModel create() {
+    public FactModel create() {
 
         indexFactTotals();
         indexLocationTotals();
 
         indexLocationPercentages();
 
-        return new PopulationModel(pieChartModel(), barChartModel(locationPercentages), locationPercentages);
+        return new FactModel(pieChartModel(), barChartModel(locationPercentages), locationPercentages);
     }
 
     private void indexFactTotals() {

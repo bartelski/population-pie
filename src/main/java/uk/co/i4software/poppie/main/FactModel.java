@@ -1,4 +1,4 @@
-package uk.co.i4software.poppie.population;
+package uk.co.i4software.poppie.main;
 
 import lombok.Getter;
 import org.primefaces.model.chart.HorizontalBarChartModel;
@@ -15,17 +15,18 @@ import java.util.Map;
  * @author David Barton
  * @since June 2015
  */
-public class PopulationModel implements Serializable {
+public class FactModel implements Serializable {
 
     private static final long serialVersionUID = -736078452584137611L;
 
-    @Getter private final PieChartModel pieChartModel;
+    @Getter
+    private final PieChartModel pieChartModel;
     @Getter private final HorizontalBarChartModel barChartModel;
 
     private final Map<Location, Map<FactName, Number>> locationPercentages;
 
-    public PopulationModel(PieChartModel pieChartModel, HorizontalBarChartModel barChartModel,
-                           Map<Location, Map<FactName, Number>> locationPercentages) {
+    public FactModel(PieChartModel pieChartModel, HorizontalBarChartModel barChartModel,
+                     Map<Location, Map<FactName, Number>> locationPercentages) {
 
         this.pieChartModel = pieChartModel;
         this.barChartModel = barChartModel;
