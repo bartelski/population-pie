@@ -110,7 +110,7 @@ class FactModelCreator {
     }
 
     private Number percentageOf(Long factValue, Long factTotal) {
-        return factValue == null ? null : formatAsPercentage(factValue.doubleValue() * 100 / factTotal.doubleValue());
+        return factValue == null || factValue == 0 ? 0 : formatAsPercentage(factValue.doubleValue() * 100 / factTotal.doubleValue());
     }
 
     private Number formatAsPercentage(double percentage) {
