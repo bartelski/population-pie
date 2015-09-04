@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (c) Copyright i4 Software Ltd. All Rights Reserved.
@@ -25,6 +26,7 @@ public class MainComponent extends UINamingContainer {
 
     private static final String ROOT_LOCATIONS_ATTR = "rootLocations";
     private static final String INITIAL_LOCATIONS = "initialLocations";
+    private static final String EXPANDED_LOCATIONS = "expandedLocations";
     private static final String FACT_TYPES_ATTR = "factTypes";
     private static final String MAIN_MODEL = "MAIN_MODEL";
 
@@ -32,7 +34,13 @@ public class MainComponent extends UINamingContainer {
     public void encodeBegin(FacesContext context) throws IOException {
         super.encodeBegin(context);
 
-        setMainModel(new MainModelCreator(rootLocations(), factTypes(), initialLocations()).create());
+        final List<Location> selectedLocations = initialLocations();
+        final List<Location> expandedLocations = expandedLocations();
+
+        final TreeNode locationTree = new LocationTreeBuilder(rootLocations(), selectedLocations, expandedLocations).build();
+        final Map<FactType, FactModel> factModel = new FactModelsBuilder(selectedLocations, factTypes()).build();
+
+        setMainModel(new MainModel(locationTree, factModel, selectedLocations));
     }
 
     @SuppressWarnings("unchecked")
@@ -40,17 +48,23 @@ public class MainComponent extends UINamingContainer {
         return (List<Location>) getAttributes().get(ROOT_LOCATIONS_ATTR);
     }
 
-    private Location[] initialLocations() {
-        return (Location[]) getAttributes().get(INITIAL_LOCATIONS);
+    @SuppressWarnings("unchecked")
+    private List<Location> initialLocations() {
+        return (List<Location>) getAttributes().get(INITIAL_LOCATIONS);
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Location> expandedLocations() {
+        return (List<Location>) getAttributes().get(EXPANDED_LOCATIONS);
     }
 
     public void onLocationsSelect() {
 
         final MainModel mainModel = getMainModel();
+        final List<Location> selectedLocations = toLocations(mainModel.getSelectedTreeNodes());
 
-        final TreeNode[] selectedTreeNodes = mainModel.getSelectedTreeNodes();
-
-        mainModel.updateModelForSelectedLocations(toLocations(selectedTreeNodes));
+        mainModel.setSelectedLocations(selectedLocations);
+        mainModel.setFactModels(new FactModelsBuilder(selectedLocations, factTypes()).build());
     }
 
     private MainModel getMainModel() {
@@ -119,5 +133,9 @@ public class MainComponent extends UINamingContainer {
     private boolean areChartsRendered() {
         return ! (getSelectedLocations() == null || getSelectedLocations().size() == 0);
     }
+
+    public void sortLocationTreeByValue(FactName factName) {
+    }
+
 
 }

@@ -1,13 +1,14 @@
 package uk.co.i4software.poppie.main;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
-import uk.co.i4software.poppie.census.FactType;
 import uk.co.i4software.poppie.census.Location;
 import uk.co.i4software.poppie.census.MockCensus;
 
-import static org.junit.Assert.assertArrayEquals;
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static uk.co.i4software.poppie.census.MockCensus.*;
 
@@ -17,29 +18,20 @@ import static uk.co.i4software.poppie.census.MockCensus.*;
  * @author David Barton
  * @since May 2015
  */
-public class MainModelCreatorTest {
-
-    private static final TreeNode TREE_ROOT;
-
-    static {
-        TREE_ROOT = new DefaultTreeNode(MainModelCreator.LOCATION_TREE);
-    }
+public class LocationTreeBuilderTest {
 
     private final MockCensus mockCensus = new MockCensus();
-    private MainModel mainModel;
+    private TreeNode locationTree;
 
-    @Test
-    public void testCreate() throws Exception {
-
-        mainModel = new MainModelCreator(mockCensus.fetchRootLocations(), mockCensus.fetchFactTypes(), new Location[0]).create();
-
-        assertEquals(TREE_ROOT, mainModel.getLocationTree());
-        assertArrayEquals(FactType.values(), mainModel.getFactTypes());
-
-        testLocationsAreCreated();
+    @Before
+    public void createLocationTree() {
+        locationTree = new LocationTreeBuilder(
+                mockCensus.fetchRootLocations(), new ArrayList<Location>(), new ArrayList<Location>()).build();
     }
 
-    private void testLocationsAreCreated() {
+    @Test
+    public void testLocationTree() {
+
         assertEquals(treeNode(ENGLAND_AND_WALES), findNode(0));
         assertEquals(treeNode(BATH_AND_NORTH_EAST_SOMERSET), findNode(0, 0));
         assertEquals(treeNode(ABBEY), findNode(0, 0, 0));
@@ -53,7 +45,8 @@ public class MainModelCreatorTest {
     }
 
     private TreeNode findNode(int... siblings) {
-        TreeNode treeNode = mainModel.getLocationTree();
+
+        TreeNode treeNode = locationTree;
 
         for (int sibling : siblings)
             treeNode = findNode(treeNode, sibling);

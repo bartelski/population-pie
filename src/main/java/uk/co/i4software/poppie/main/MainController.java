@@ -9,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,13 +34,14 @@ public class MainController implements Serializable {
     private Census census;
 
     private List<Location> rootLocations;
-    private Location[] initialLocations;
-
+    private List<Location> initialLocations;
+    private List<Location> expandedLocations;
 
     @PostConstruct
     public void init() {
         rootLocations = census.fetchRootLocations();
-        initialLocations = new Location[] { rootLocations.get(0), rootLocations.get(0).getChildLocations().get(0)};
+        initialLocations = Arrays.asList(rootLocations.get(0), rootLocations.get(0).getChildLocations().get(0));
+        expandedLocations = Arrays.asList(rootLocations.get(0), rootLocations.get(0).getChildLocations().get(0));
     }
 
     public List<Location> getRootLocations() {
@@ -54,7 +56,11 @@ public class MainController implements Serializable {
         return THEMES;
     }
 
-    public Location[] getInitialLocations() {
+    public List<Location> getInitialLocations() {
         return initialLocations;
+    }
+
+    public List<Location> getExpandedLocations() {
+        return expandedLocations;
     }
 }
