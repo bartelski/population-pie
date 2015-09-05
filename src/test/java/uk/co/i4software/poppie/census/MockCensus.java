@@ -59,7 +59,7 @@ public class MockCensus implements Census {
         ENGLAND_AND_WALES.setChildLocations(LOCAL_AUTHORITIES);
     }
 
-    public List<Location> fetchRootLocations() {
+    public List<Location> fetchLocationHierarchy() {
         return singletonList(ENGLAND_AND_WALES);
     }
 

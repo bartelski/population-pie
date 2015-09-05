@@ -33,7 +33,7 @@ public class BathHackedCensus2011Test {
     public void setup() {
 
         allLocations = new ArrayList<Location>();
-        createLocations(census2011.fetchRootLocations());
+        createLocations(census2011.fetchLocationHierarchy());
     }
 
     private void createLocations(List<Location> locations) {

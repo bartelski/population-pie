@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface Census extends Serializable {
 
-    List<Location> fetchRootLocations();
+    List<Location> fetchLocationHierarchy();
 
     FactType[] fetchFactTypes();
 }

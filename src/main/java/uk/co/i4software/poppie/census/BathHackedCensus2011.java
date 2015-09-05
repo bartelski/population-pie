@@ -20,7 +20,7 @@ public class BathHackedCensus2011 extends BathHackedJsonLoader implements Census
 
     private static final String JSON_FILENAME = "/census2011.json";
 
-    private List<Location> rootLocations;
+    private List<Location> locationHierarchy;
 
     public BathHackedCensus2011() {
         super(JSON_FILENAME);
@@ -35,22 +35,22 @@ public class BathHackedCensus2011 extends BathHackedJsonLoader implements Census
         return facts;
     }
 
-    public List<Location> fetchRootLocations() {
-        if (rootLocations == null) createRootLocations();
-        return rootLocations;
+    public List<Location> fetchLocationHierarchy() {
+        if (locationHierarchy == null) createLocationHierarchy();
+        return locationHierarchy;
     }
 
     public FactType[] fetchFactTypes() {
         return FactType.values();
     }
 
-    private void createRootLocations() {
+    private void createLocationHierarchy() {
 
         Map<LocationType, List<Location>> locationTypeMap = locationTypeMap();
 
 
-        rootLocations = locationTypeMap.get(LocationType.COUNTRY);
-        Collections.sort(rootLocations, new LocationComparator());
+        locationHierarchy = locationTypeMap.get(LocationType.COUNTRY);
+        Collections.sort(locationHierarchy, new LocationComparator());
 
         final List<Location> localAuthorities = locationTypeMap.get(LocationType.LOCAL_AUTHORITY);
         Collections.sort(localAuthorities, new LocationComparator());
@@ -63,7 +63,7 @@ public class BathHackedCensus2011 extends BathHackedJsonLoader implements Census
 
         addOutputAreasToWards(outputAreas, wards);
         addWardsToLocationAuthorties(wards, localAuthorities);
-        addLocalAuthoritiesToCountries(localAuthorities, rootLocations);
+        addLocalAuthoritiesToCountries(localAuthorities, locationHierarchy);
     }
 
     private Map<LocationType, List<Location>> locationTypeMap() {

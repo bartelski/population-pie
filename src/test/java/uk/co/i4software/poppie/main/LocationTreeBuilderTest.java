@@ -26,7 +26,7 @@ public class LocationTreeBuilderTest {
     @Before
     public void createLocationTree() {
         locationTree = new LocationTreeBuilder(
-                mockCensus.fetchRootLocations(), new ArrayList<Location>(), new ArrayList<Location>()).build();
+                mockCensus.fetchLocationHierarchy(), new ArrayList<Location>(), new ArrayList<Location>()).build();
     }
 
     @Test

@@ -33,19 +33,19 @@ public class MainController implements Serializable {
     @Inject
     private Census census;
 
-    private List<Location> rootLocations;
+    private List<Location> locationHierarchy;
     private List<Location> initialLocations;
     private List<Location> expandedLocations;
 
     @PostConstruct
     public void init() {
-        rootLocations = census.fetchRootLocations();
-        initialLocations = Arrays.asList(rootLocations.get(0), rootLocations.get(0).getChildLocations().get(0));
-        expandedLocations = Arrays.asList(rootLocations.get(0), rootLocations.get(0).getChildLocations().get(0));
+        locationHierarchy = census.fetchLocationHierarchy();
+        initialLocations = Arrays.asList(locationHierarchy.get(0), locationHierarchy.get(0).getChildLocations().get(0));
+        expandedLocations = Arrays.asList(locationHierarchy.get(0), locationHierarchy.get(0).getChildLocations().get(0));
     }
 
-    public List<Location> getRootLocations() {
-        return rootLocations;
+    public List<Location> getLocationHierarchy() {
+        return locationHierarchy;
     }
 
     public FactType[] getFactTypes() {

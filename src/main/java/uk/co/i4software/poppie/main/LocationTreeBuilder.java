@@ -16,16 +16,16 @@ public class LocationTreeBuilder {
 
     private static final String LOCATION_TREE = "LOCATIONS";
 
-    private final List<Location> rootLocations;
+    private final List<Location> locationHierarchy;
     private final List<Location> selectedLocations;
     private final List<Location> expandedLocations;
 
     public LocationTreeBuilder(
-            List<Location> rootLocations,
+            List<Location> locationHierarchy,
             List<Location> selectedLocations,
             List<Location> expandedLocations) {
 
-        this.rootLocations = rootLocations;
+        this.locationHierarchy = locationHierarchy;
         this.selectedLocations = selectedLocations;
         this.expandedLocations = expandedLocations;
     }
@@ -33,7 +33,7 @@ public class LocationTreeBuilder {
     public TreeNode build() {
 
         TreeNode treeRoot = new DefaultTreeNode(LOCATION_TREE);
-        buildLocationTree(rootLocations, treeRoot);
+        buildLocationTree(locationHierarchy, treeRoot);
 
         return treeRoot;
     }

@@ -23,7 +23,6 @@ public class MainModel implements Serializable {
 
     private static final long serialVersionUID = 3353094740374788487L;
 
-
     @Getter @Setter private TreeNode locationTree;
     @Getter @Setter private TreeNode[] selectedTreeNodes;
     @Getter @Setter private List<Location> selectedLocations;

@@ -15,7 +15,7 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core">
 
 <composite:interface componentType="main">
-    <composite:attribute name="rootLocations" required="true" type="java.util.List"/>
+    <composite:attribute name="locationHierarchy" required="true" type="java.util.List"/>
     <composite:attribute name="factTypes" required="true" type="uk.co.i4software.poppie.census.FactType[]"/>
     <composite:attribute name="initialLocations" required="true" type="java.util.List"/>
     <composite:attribute name="expandedLocations" required="true" type="java.util.List"/>
@@ -42,6 +42,8 @@
                     <p:ajax event="unselect" listener="#{cc.onLocationsSelect}"
                             update="@([id$=dataTable],[id$=pieChart],[id$=barChart])"
                             onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
+                    <p:ajax event="expand" listener="#{cc.onNodeExpand}"/>
+                    <p:ajax event="collapse" listener="#{cc.onNodeCollapse}"/>
 
                     <p:treeNode><h:outputText value="#{node}"/></p:treeNode>
 

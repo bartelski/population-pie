@@ -1,5 +1,7 @@
 package uk.co.i4software.poppie.main;
 
+import org.primefaces.event.NodeCollapseEvent;
+import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.PieChartModel;
@@ -24,7 +26,7 @@ import java.util.Map;
 @FacesComponent(value = "main")
 public class MainComponent extends UINamingContainer {
 
-    private static final String ROOT_LOCATIONS_ATTR = "rootLocations";
+    private static final String LOCATION_HIERARCHY_ATTR = "locationHierarchy";
     private static final String INITIAL_LOCATIONS = "initialLocations";
     private static final String EXPANDED_LOCATIONS = "expandedLocations";
     private static final String FACT_TYPES_ATTR = "factTypes";
@@ -36,16 +38,14 @@ public class MainComponent extends UINamingContainer {
 
         final List<Location> selectedLocations = initialLocations();
         final List<Location> expandedLocations = expandedLocations();
+        final List<Location> locationHierarchy = locationHierarchy();
 
-        final TreeNode locationTree = new LocationTreeBuilder(rootLocations(), selectedLocations, expandedLocations).build();
+        final TreeNode locationTree = new LocationTreeBuilder(locationHierarchy, selectedLocations,
+                expandedLocations).build();
+
         final Map<FactType, FactModel> factModel = new FactModelsBuilder(selectedLocations, factTypes()).build();
 
-        setMainModel(new MainModel(locationTree, factModel, selectedLocations));
-    }
-
-    @SuppressWarnings("unchecked")
-    private List<Location> rootLocations() {
-        return (List<Location>) getAttributes().get(ROOT_LOCATIONS_ATTR);
+        mainModel(new MainModel(locationTree, factModel, selectedLocations));
     }
 
     @SuppressWarnings("unchecked")
@@ -58,21 +58,30 @@ public class MainComponent extends UINamingContainer {
         return (List<Location>) getAttributes().get(EXPANDED_LOCATIONS);
     }
 
+    @SuppressWarnings("unchecked")
+    private List<Location> locationHierarchy() {
+        return (List<Location>) getAttributes().get(LOCATION_HIERARCHY_ATTR);
+    }
+
+    private FactType[] factTypes() {
+        return (FactType[]) getAttributes().get(FACT_TYPES_ATTR);
+    }
+
+    private void mainModel(MainModel mainModel) {
+        getStateHelper().put(MAIN_MODEL, mainModel);
+    }
+
     public void onLocationsSelect() {
 
-        final MainModel mainModel = getMainModel();
+        final MainModel mainModel = mainModel();
         final List<Location> selectedLocations = toLocations(mainModel.getSelectedTreeNodes());
 
         mainModel.setSelectedLocations(selectedLocations);
         mainModel.setFactModels(new FactModelsBuilder(selectedLocations, factTypes()).build());
     }
 
-    private MainModel getMainModel() {
+    private MainModel mainModel() {
         return (MainModel) getStateHelper().get(MAIN_MODEL);
-    }
-
-    private void setMainModel(MainModel mainModel) {
-        getStateHelper().put(MAIN_MODEL, mainModel);
     }
 
     private List<Location> toLocations(TreeNode[] selectedTreeNodes) {
@@ -85,57 +94,71 @@ public class MainComponent extends UINamingContainer {
         return selectedLocations;
     }
 
+    public void onNodeExpand(NodeExpandEvent event) {
+        event.getTreeNode().setExpanded(true);
+    }
+
+    public void onNodeCollapse(NodeCollapseEvent event) {
+        event.getTreeNode().setExpanded(false);
+    }
+
     public TreeNode getLocationTree() {
-        return getMainModel().getLocationTree();
+        return mainModel().getLocationTree();
     }
 
     public TreeNode[] getSelectedTreeNodes() {
-        return getMainModel().getSelectedTreeNodes();
+        return mainModel().getSelectedTreeNodes();
     }
 
     public void setSelectedTreeNodes(TreeNode[] selectedTreeNodes) {
-        getMainModel().setSelectedTreeNodes(selectedTreeNodes);
-    }
-
-    private FactType[] factTypes() {
-        return (FactType[]) getAttributes().get(FACT_TYPES_ATTR);
+        mainModel().setSelectedTreeNodes(selectedTreeNodes);
     }
 
     public PieChartModel pieChartModelFor(FactType factType) {
-        return getMainModel().pieChartModelFor(factType);
+        return mainModel().pieChartModelFor(factType);
     }
 
     public HorizontalBarChartModel barChartModelFor(FactType factType) {
-        return getMainModel().barChartModelFor(factType);
+        return mainModel().barChartModelFor(factType);
     }
 
     public Number valueOf(Location location, FactType factType, FactName factName) {
-        return getMainModel().valueOf(location, factType, factName);
+        return mainModel().valueOf(location, factType, factName);
     }
 
     public Number percentageOf(Location location, FactType factType, FactName factName) {
-        return getMainModel().percentageOf(location, factType, factName);
+        return mainModel().percentageOf(location, factType, factName);
     }
-
-    public List<Location> getSelectedLocations() {
-        return getMainModel().getSelectedLocations();
-    }
-
 
     public boolean isPieChartRendered() {
         return areChartsRendered();
+    }
+
+    private boolean areChartsRendered() {
+        return !(getSelectedLocations() == null || getSelectedLocations().size() == 0);
+    }
+
+    public List<Location> getSelectedLocations() {
+        return mainModel().getSelectedLocations();
     }
 
     public boolean isBarChartRendered() {
         return areChartsRendered();
     }
 
-    private boolean areChartsRendered() {
-        return ! (getSelectedLocations() == null || getSelectedLocations().size() == 0);
-    }
-
     public void sortLocationTreeByValue(FactName factName) {
-    }
 
+        final MainModel mainModel = mainModel();
+        final TreeNode locationTree = mainModel.getLocationTree();
+
+        final List<Location> selected = LocationFinder.findSelectedLocations(locationTree);
+        final List<Location> expanded = LocationFinder.findExpandedLocations(locationTree);
+        final List<Location> locationHierarchy = locationHierarchy();
+
+        LocationSorter.sort(locationHierarchy, factName, mainModel.getLastSortBy());
+        mainModel.setLocationTree(new LocationTreeBuilder(locationHierarchy, selected, expanded).build());
+        mainModel.setLastSortBy(factName);
+
+    }
 
 }
