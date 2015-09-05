@@ -62,6 +62,7 @@
                                     <p:outputPanel id="dataTable">
                                         <p:dataTable value="#{cc.selectedLocations}" var="location" rowHover="true"
                                                      tableStyle="width:auto; min-width: 100%">
+                                            <p:ajax event="sort" listener="#{cc.sort}"/>
                                             <p:columnGroup type="header">
                                                 <p:row>
                                                     <p:column headerText="Location" rowspan="2" width="300"

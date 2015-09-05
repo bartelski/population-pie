@@ -2,6 +2,7 @@ package uk.co.i4software.poppie.main;
 
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
+import org.primefaces.event.data.SortEvent;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.PieChartModel;
@@ -138,7 +139,7 @@ public class MainComponent extends UINamingContainer {
         return !(getSelectedLocations() == null || getSelectedLocations().size() == 0);
     }
 
-    private List<Location> getSelectedLocations() {
+    public List<Location> getSelectedLocations() {
         return mainModel().getSelectedLocations();
     }
 
@@ -159,6 +160,9 @@ public class MainComponent extends UINamingContainer {
         mainModel.setLocationTree(new LocationTreeBuilder(locationHierarchy, selected, expanded).build());
         mainModel.setLastSortBy(factName);
 
+    }
+
+    public void sort(SortEvent event) {
     }
 
 }
