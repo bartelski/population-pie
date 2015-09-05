@@ -19,7 +19,7 @@ import java.util.Map;
  * @author David Barton
  * @since June 2015
  */
-public class MainModel implements Serializable {
+class MainModel implements Serializable {
 
     private static final long serialVersionUID = 3353094740374788487L;
 
@@ -52,5 +52,4 @@ public class MainModel implements Serializable {
     public Number percentageOf(Location location, FactType factType, FactName factName) {
         return factModels.get(factType).percentageOf(location, factName);
     }
-
 }

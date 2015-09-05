@@ -12,7 +12,7 @@ import java.util.List;
  * @author David Barton
  * @since September 2015
  */
-public class LocationFinder {
+class LocationFinder {
 
     static List<Location> findExpandedLocations(TreeNode locationTree) {
 

@@ -138,7 +138,7 @@ public class MainComponent extends UINamingContainer {
         return !(getSelectedLocations() == null || getSelectedLocations().size() == 0);
     }
 
-    public List<Location> getSelectedLocations() {
+    private List<Location> getSelectedLocations() {
         return mainModel().getSelectedLocations();
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
  * @author David Barton
  * @since September 2015
  */
-public class LocationTreeBuilder {
+class LocationTreeBuilder {
 
     private static final String LOCATION_TREE = "LOCATIONS";
 
