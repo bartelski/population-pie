@@ -147,22 +147,73 @@ public class MainComponent extends UINamingContainer {
         return areChartsRendered();
     }
 
-    public void sortLocationTreeByValue(FactName factName) {
+    public void sort(SortEvent event) {
 
         final MainModel mainModel = mainModel();
         final TreeNode locationTree = mainModel.getLocationTree();
 
-        final List<Location> selected = LocationFinder.findSelectedLocations(locationTree);
-        final List<Location> expanded = LocationFinder.findExpandedLocations(locationTree);
+        final List<Location> selected = selectedLocations(locationTree);
+        final List<Location> expanded = expandedLocations(locationTree);
         final List<Location> locationHierarchy = locationHierarchy();
 
-        LocationSorter.sort(locationHierarchy, factName, mainModel.getLastSortBy());
+        LocationSorter.sort(locationHierarchy, toSortDefinition(event));
         mainModel.setLocationTree(new LocationTreeBuilder(locationHierarchy, selected, expanded).build());
-        mainModel.setLastSortBy(factName);
 
     }
 
-    public void sort(SortEvent event) {
+    private List<Location> expandedLocations(TreeNode locationTree) {
+        return LocationFinder.findExpandedLocations(locationTree);
     }
+
+    private List<Location> selectedLocations(TreeNode locationTree) {
+        return LocationFinder.findSelectedLocations(locationTree);
+    }
+
+    private static SortDefinition toSortDefinition(SortEvent sortEvent) {
+
+        final String clientId = sortEvent.getSortColumn().getClientId();
+        final String sortCode = sortCodeFrom(clientId);
+
+        return new SortDefinition(sortTypeFrom(sortCode), factNameFrom(sortCode), sortEvent.isAscending());
+
+    }
+
+    private static SortDefinition.SortType sortTypeFrom(String sortCode) {
+
+        final SortDefinition.SortType sortType;
+
+        switch (sortCode.charAt(0)) {
+
+            case 'P' :
+                sortType = SortDefinition.SortType.PERCENTAGE;
+                break;
+
+            case 'V' :
+                sortType = SortDefinition.SortType.VALUE;
+                break;
+
+            default :
+                sortType = SortDefinition.SortType.LOCATION;
+
+        }
+
+        return sortType;
+    }
+
+    private static FactName factNameFrom(String sortCode) {
+
+        FactName factName = null;
+
+        if (sortCode.length() > 1)
+            factName = FactName.valueOf(sortCode.substring(2));
+
+        return factName;
+    }
+
+    private static String sortCodeFrom(String clientId) {
+        final String[] split = clientId.split(":");
+        return split[split.length - 1];
+    }
+
 
 }

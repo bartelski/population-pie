@@ -23,13 +23,14 @@ class MainModel implements Serializable {
 
     private static final long serialVersionUID = 3353094740374788487L;
 
-    @Getter @Setter private TreeNode locationTree;
-    @Getter @Setter private TreeNode[] selectedTreeNodes;
-    @Getter @Setter private List<Location> selectedLocations;
-
-    @Setter private Map<FactType, FactModel> factModels;
-    @Getter @Setter private FactName lastSortBy;
-
+    @Getter @Setter
+    private TreeNode locationTree;
+    @Getter @Setter
+    private TreeNode[] selectedTreeNodes;
+    @Getter @Setter
+    private List<Location> selectedLocations;
+    @Setter
+    private Map<FactType, FactModel> factModels;
 
     public MainModel(TreeNode locationTree, Map<FactType, FactModel> factModels, List<Location> selectedLocations) {
         this.locationTree = locationTree;

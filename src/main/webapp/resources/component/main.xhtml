@@ -61,39 +61,41 @@
                                 <p:tab title="Data Table">
                                     <p:outputPanel id="dataTable">
                                         <p:dataTable value="#{cc.selectedLocations}" var="location" rowHover="true"
-                                                     tableStyle="width:auto; min-width: 100%">
-                                            <p:ajax event="sort" listener="#{cc.sort}"/>
+                                                     tableStyle="min-width: 100%; width: auto; border-collapse: separate; border-spacing: 1px 1px"
+                                                     draggableColumns="true"
+                                                     draggableRows="true">
+                                            <p:ajax event="sort" listener="#{cc.sort}" update="@([id$=locationTree])"/>
                                             <p:columnGroup type="header">
                                                 <p:row>
-                                                    <p:column headerText="Location" rowspan="2" width="300"
+                                                    <p:column id="L" headerText="Location" rowspan="2" width="250"
                                                               sortBy="#{location.locationName}"
-                                                              styleClass="pp-locationColumn"/>
-                                                    <ui:repeat value="#{factType.factNames}" var="factName">
-                                                        <p:column headerText="#{factName.displayName}" colspan="2"/>
-                                                    </ui:repeat>
+                                                              styleClass="pp-locationColumn">
+
+                                                    </p:column>
+                                                    <c:forEach items="#{factType.factNames}" var="factName">
+                                                        <p:column headerText="#{factName.displayName}" colspan="2" style="width:auto"/>
+                                                    </c:forEach>
                                                 </p:row>
+
                                                 <p:row>
-                                                    <ui:repeat value="#{factType.factNames}" var="factName">
-                                                        <p:column>
-                                                            <f:facet name="header">
-                                                                <p:commandLink actionListener="#{cc.sortLocationTreeByValue(factName)}"
-                                                                               update="@([id$=locationTree])">#</p:commandLink>
-                                                            </f:facet>
+                                                    <c:forEach items="#{factType.factNames}" var="factName">
+                                                        <p:column id="V-#{factName}" headerText="#" styleClass="pp-valueColumn"
+                                                                  sortBy="#{location.factValueOf(factName)}">
                                                         </p:column>
-                                                        <p:column>
-                                                            <f:facet name="header">%</f:facet>
+                                                        <p:column id="P-#{factName}" headerText="%" styleClass="pp-percentageColumn"
+                                                                  sortBy="#{location.factValueOf(factName)}">
                                                         </p:column>
-                                                    </ui:repeat>
+                                                    </c:forEach>
                                                 </p:row>
                                             </p:columnGroup>
-                                            <p:column>
+                                            <p:column >
                                                 <h:outputText value="#{location.locationName}"/>
                                             </p:column>
                                             <c:forEach items="#{factType.factNames}" var="factName">
-                                                <p:column styleClass="pp-column">
+                                                <p:column styleClass="pp-valueColumn">
                                                     <h:outputText value="#{cc.valueOf(location, factType, factName)}"/>
                                                 </p:column>
-                                                <p:column styleClass="pp-column">
+                                                <p:column styleClass="pp-percentageColumn">
                                                     <h:outputText
                                                             value="#{cc.percentageOf(location, factType, factName)}"/>
                                                 </p:column>

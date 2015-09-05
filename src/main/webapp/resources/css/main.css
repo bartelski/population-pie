@@ -11,6 +11,18 @@
     left:0;
 }
 
+.ui-icon-carat-2-n-s {
+    display: none !important;
+}
+
+.ui-icon-triangle-1-n {
+    display: inline-block !important;
+}
+
+.ui-icon-triangle-1-s {
+    display: inline-block !important;
+}
+
 .pp-southLayoutUnit > .ui-layout-unit-content  {
     overflow: hidden !important;
 }
@@ -24,13 +36,22 @@
     padding-bottom: 0 !important;
 }
 
-.pp-column {
+.pp-locationColumn {
     text-align: center;
+    min-width: 250px;
 }
 
-.pp-locationColumn {
-    min-width: 200px;
+.pp-valueColumn {
+    text-align: center;
+    min-width: 50px;
 }
+
+.pp-percentageColumn {
+    text-align: center;
+    min-width: 50px;
+}
+
+
 
 .pp-pieChartLayout > div {
     overflow:hidden !important;

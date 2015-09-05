@@ -15,26 +15,66 @@ import java.util.List;
  */
 class LocationSorter {
 
-    public static void sort(List<Location> locations, FactName sortBy, FactName lastSortBy) {
+    public static void sort(List<Location> locations, SortDefinition sortDefinition) {
 
-        if (sortBy == lastSortBy)
-            Collections.reverse(locations); else sortByDescendingValue(locations, sortBy);
+        Collections.sort(locations, toComparator(sortDefinition));
 
         for (Location location : locations)
-            sort(location.getChildLocations(), sortBy, lastSortBy);
+            sort(location.getChildLocations(), sortDefinition);
     }
 
-    private static void sortByDescendingValue(List<Location> locations, final FactName sortBy) {
 
-        Collections.sort(locations, new Comparator<Location>() {
+    private static Comparator<? super Location> toComparator(SortDefinition sortDefinition) {
+
+        final int ascending = toInt(sortDefinition.isAscending());
+
+        switch (sortDefinition.getSortType()) {
+
+            case VALUE:
+
+                return valueComparator(sortDefinition.getFactName(), ascending);
+
+            case PERCENTAGE:
+                return percentageComparator(sortDefinition.getFactName(), ascending);
+
+            default:
+                return locationComparator(ascending);
+        }
+
+    }
+
+    private static Comparator<? super Location> locationComparator(final int ascending) {
+
+        return new Comparator<Location>() {
+            public int compare(Location l1, Location l2) {
+                return (l1.getDisplayName().compareToIgnoreCase(l2.getDisplayName())) * ascending;
+            }
+        };
+    }
+
+    private static Comparator<? super Location> percentageComparator(FactName factName, int ascending) {
+        return new Comparator<Location>() {
+            public int compare(Location l1, Location l2) {
+                return 0;
+            }
+        };
+    }
+
+    private static int toInt(boolean ascending) {
+        return ascending ? 1 : -1;
+    }
+
+    private static Comparator<? super Location> valueComparator(final FactName factName, final int ascending) {
+
+        return new Comparator<Location>() {
             public int compare(Location l1, Location l2) {
 
-                final Long factValue1 = l1.factValueOf(sortBy);
-                final Long factValue2 = l2.factValueOf(sortBy);
+                final Long factValue1 = l1.factValueOf(factName);
+                final Long factValue2 = l2.factValueOf(factName);
 
-                return factValue1 < factValue2 ? 1 : factValue2 < factValue1 ? -1 : 0;
+                return factValue1 < factValue2 ? (-ascending): factValue2 < factValue1 ? ascending : 0;
             }
-        });
+        };
     }
 
 }
