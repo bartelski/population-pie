@@ -8,6 +8,7 @@ import uk.co.i4software.poppie.census.Location;
 import uk.co.i4software.poppie.census.MockCensus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static uk.co.i4software.poppie.census.MockCensus.*;
@@ -20,13 +21,12 @@ import static uk.co.i4software.poppie.census.MockCensus.*;
  */
 public class LocationTreeBuilderTest {
 
-    private final MockCensus mockCensus = new MockCensus();
+    private final List<Location> locationHierarchy = new MockCensus().fetchLocationHierarchy();
     private TreeNode locationTree;
 
     @Before
     public void createLocationTree() {
-        locationTree = new LocationTreeBuilder(
-                mockCensus.fetchLocationHierarchy(), new ArrayList<Location>(), new ArrayList<Location>()).build();
+        locationTree = new LocationTreeBuilder(locationHierarchy, new ArrayList<Location>(), new ArrayList<Location>()).build();
     }
 
     @Test

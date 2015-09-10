@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static uk.co.i4software.poppie.census.FactName.*;
 
 /**
@@ -42,25 +41,39 @@ public class MockCensus implements Census {
             asList(BATHAVON_NORTH_MALES, BATHAVON_NORTH_0_4, BATHAVON_NORTH_45_64);
 
     public static final Location ENGLAND_AND_WALES = new Location("England and Wales", new ArrayList<Fact>());
-    public static final Location BATH_AND_NORTH_EAST_SOMERSET = new Location("Bath and North East Somerset", new  ArrayList<Fact>());
+    public static final Location BATH_AND_NORTH_EAST_SOMERSET = new Location("Bath and North East Somerset", new
+            ArrayList<Fact>());
 
     public static final Location ABBEY = new Location("Abbey", ABBEY_FACTS);
     public static final Location BATHAVON_NORTH = new Location("Bathavon North", BATHAVON_NORTH_FACTS);
     public static final Location E00072563 = new Location("Abbey ward: E00072563", "E00072563", new ArrayList<Fact>());
     public static final Location E00072564 = new Location("Abbey ward: E00072564", "E00072564", new ArrayList<Fact>());
 
-    private static final List<Location> LOCAL_AUTHORITIES = singletonList(BATH_AND_NORTH_EAST_SOMERSET);
-    private static final List<Location> WARDS = asList(ABBEY, BATHAVON_NORTH);
-    private static final List<Location> ABBEY_OUTPUT_AREAS = asList(E00072563, E00072564);
+    private final List<Location> locationHierarchy;
 
-    static {
-        ABBEY.setChildLocations(ABBEY_OUTPUT_AREAS);
-        BATH_AND_NORTH_EAST_SOMERSET.setChildLocations(WARDS);
-        ENGLAND_AND_WALES.setChildLocations(LOCAL_AUTHORITIES);
+
+    public MockCensus() {
+        locationHierarchy = new ArrayList<Location>();
+        buildLocationHierarchy();
+    }
+
+    private void buildLocationHierarchy() {
+
+        final List<Location> locationAuthorities = new ArrayList<Location>();
+        locationAuthorities.add(BATH_AND_NORTH_EAST_SOMERSET);
+
+        final List<Location> wards = asList(ABBEY, BATHAVON_NORTH);
+        final List<Location> abbeyOutputAreas = asList(E00072563, E00072564);
+
+        ABBEY.setChildLocations(abbeyOutputAreas);
+        BATH_AND_NORTH_EAST_SOMERSET.setChildLocations(wards);
+        ENGLAND_AND_WALES.setChildLocations(locationAuthorities);
+
+        locationHierarchy.add(ENGLAND_AND_WALES);
     }
 
     public List<Location> fetchLocationHierarchy() {
-        return singletonList(ENGLAND_AND_WALES);
+        return locationHierarchy;
     }
 
     public FactType[] fetchFactTypes() {
