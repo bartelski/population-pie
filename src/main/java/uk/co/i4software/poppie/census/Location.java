@@ -66,7 +66,7 @@ public class Location implements Serializable {
     }
 
     public Long factValueOf(FactName factName) {
-        return hasFact(factName) ? factMap.get(factName).getFactValue() : null;
+        return hasFact(factName) ? factMap.get(factName).getFactValue() : 0;
     }
 
 }

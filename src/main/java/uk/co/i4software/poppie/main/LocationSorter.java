@@ -17,10 +17,18 @@ class LocationSorter {
 
     public static void sort(List<Location> locations, SortDefinition sortDefinition) {
 
-        Collections.sort(locations, toComparator(sortDefinition));
+        sort(locations, toComparator(sortDefinition));
+
+
+    }
+
+    private static void sort(List<Location> locations, Comparator<? super Location> comparator) {
+
+        Collections.sort(locations, comparator);
 
         for (Location location : locations)
-            sort(location.getChildLocations(), sortDefinition);
+            sort(location.getChildLocations(), comparator);
+
     }
 
 

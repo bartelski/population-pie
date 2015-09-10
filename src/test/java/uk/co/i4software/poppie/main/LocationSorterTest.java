@@ -2,12 +2,14 @@ package uk.co.i4software.poppie.main;
 
 import org.junit.Before;
 import org.junit.Test;
+import uk.co.i4software.poppie.census.FactName;
 import uk.co.i4software.poppie.census.Location;
 import uk.co.i4software.poppie.census.MockCensus;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static uk.co.i4software.poppie.main.SortDefinition.*;
 
 /**
  * Copyright DonRiver Inc. All Rights Reserved.
@@ -20,13 +22,19 @@ public class LocationSorterTest {
     private List<Location> locationHierarchy;
 
 
-    private static SortDefinition locationsDescending;
-    private static SortDefinition locationsAscending;
+    private static final SortDefinition DESCENDING_LOCATIONS;
+    private static final SortDefinition ASCENDING_LOCATIONS;
+    private static final SortDefinition DESCENDING_VALUES;
+    private static final SortDefinition ASCENDING_VALUES;
 
     static {
 
-        locationsDescending = new SortDefinition(SortDefinition.SortType.LOCATION, null, false);
-        locationsAscending = new SortDefinition(SortDefinition.SortType.LOCATION, null, true);
+        DESCENDING_LOCATIONS = new SortDefinition(SortType.LOCATION, null, false);
+        ASCENDING_LOCATIONS = new SortDefinition(SortType.LOCATION, null, true);
+
+        DESCENDING_VALUES = new SortDefinition(SortType.VALUE, FactName.AGE_0_4, false);
+        ASCENDING_VALUES = new SortDefinition(SortType.VALUE, FactName.AGE_0_4, false);
+
     }
 
     @Before
@@ -36,9 +44,9 @@ public class LocationSorterTest {
 
 
     @Test
-    public void locationsDescendingSort() throws Exception {
+    public void descendingLocations() throws Exception {
 
-        LocationSorter.sort(locationHierarchy, locationsDescending);
+        LocationSorter.sort(locationHierarchy, DESCENDING_LOCATIONS);
 
         assertEquals(findLocation(), MockCensus.ENGLAND_AND_WALES);
         assertEquals(findLocation(0), MockCensus.BATH_AND_NORTH_EAST_SOMERSET);
@@ -50,9 +58,9 @@ public class LocationSorterTest {
     }
 
     @Test
-    public void locationsAscendingSort() throws Exception {
+    public void ascendingLocations() throws Exception {
 
-        LocationSorter.sort(locationHierarchy, locationsAscending);
+        LocationSorter.sort(locationHierarchy, ASCENDING_LOCATIONS);
 
         assertEquals(findLocation(), MockCensus.ENGLAND_AND_WALES);
         assertEquals(findLocation(0), MockCensus.BATH_AND_NORTH_EAST_SOMERSET);
@@ -60,6 +68,26 @@ public class LocationSorterTest {
         assertEquals(findLocation(0, 1), MockCensus.BATHAVON_NORTH);
         assertEquals(findLocation(0, 0, 0), MockCensus.E00072563);
         assertEquals(findLocation(0, 0, 1), MockCensus.E00072564);
+    }
+
+    @Test
+    public void descendingValues() throws Exception {
+
+        LocationSorter.sort(locationHierarchy, DESCENDING_VALUES);
+
+        assertEquals(findLocation(0, 0), MockCensus.BATHAVON_NORTH);
+        assertEquals(findLocation(0, 1), MockCensus.ABBEY);
+
+    }
+
+    @Test
+    public void ascendingValues() throws Exception {
+
+        LocationSorter.sort(locationHierarchy, ASCENDING_VALUES);
+
+        assertEquals(findLocation(0, 1), MockCensus.ABBEY);
+        assertEquals(findLocation(0, 0), MockCensus.BATHAVON_NORTH);
+
     }
 
     private Location findLocation(int... siblings) {
