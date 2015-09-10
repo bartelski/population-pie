@@ -9,7 +9,6 @@ import uk.co.i4software.poppie.census.FactName;
 import uk.co.i4software.poppie.census.FactType;
 import uk.co.i4software.poppie.census.Location;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,8 +55,8 @@ class FactModelsBuilder {
 
         private final List<Location> locations;
         private final FactName[] factNames;
+
         private Map<FactName, Long> factTotals;
-        private Map<Location, Long> locationTotals;
         private Map<Location, Map<FactName, Number>> locationPercentages;
 
 
@@ -69,11 +68,10 @@ class FactModelsBuilder {
         public FactModel build() {
 
             indexFactTotals();
-            indexLocationTotals();
 
             indexLocationPercentages();
 
-            return new FactModel(pieChartModel(), barChartModel(locationPercentages), locationPercentages);
+            return new FactModel(pieChartModel(), barChartModel(locationPercentages));
         }
 
         private void indexFactTotals() {
@@ -98,50 +96,24 @@ class FactModelsBuilder {
             return factTotals.containsKey(factName) ? factTotals.get(factName) : 0;
         }
 
-        private void indexLocationTotals() {
-
-            locationTotals = new HashMap<Location, Long>();
-
-            for (Location location : locations)
-                locationTotals.put(location, totalFor(location));
-        }
-
-        private long totalFor(Location location) {
-
-            long locationTotal = 0;
-
-            for (Fact fact : location.factsFor(factNames))
-                locationTotal += fact.getFactValue();
-
-            return locationTotal;
-        }
-
         private void indexLocationPercentages() {
 
             locationPercentages = new HashMap<Location, Map<FactName, Number>>();
 
             for (Location location : locations)
-                locationPercentages.put(location, factPercentagesFor(location, locationTotals));
+                locationPercentages.put(location, factPercentagesFor(location));
         }
 
-        private Map<FactName, Number> factPercentagesFor(Location location, Map<Location, Long> locationTotals) {
+        private Map<FactName, Number> factPercentagesFor(Location location) {
 
             Map<FactName, Number> factPercentages = new HashMap<FactName, Number>();
 
             for (FactName factName : factNames)
-                factPercentages.put(factName, percentageOf(location.factValueOf(factName), locationTotals.get(location)));
+                factPercentages.put(factName, location.factPercentageOf(factName));
 
             return factPercentages;
         }
 
-        private Number percentageOf(Long factValue, Long factTotal) {
-            return factValue == null || factValue == 0 ? 0 : formatAsPercentage(factValue.doubleValue() * 100 / factTotal.doubleValue());
-        }
-
-        private Number formatAsPercentage(double percentage) {
-            DecimalFormat df = new DecimalFormat("0.00");
-            return Double.valueOf(df.format(percentage));
-        }
 
         private PieChartModel pieChartModel() {
 

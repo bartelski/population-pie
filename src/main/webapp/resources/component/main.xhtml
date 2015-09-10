@@ -38,7 +38,7 @@
 
                     <p:ajax event="select" listener="#{cc.onLocationsSelect}"
                             update="@([id$=dataTable],[id$=pieChart],[id$=barChart])"
-                            onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
+                            onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide()"/>
                     <p:ajax event="unselect" listener="#{cc.onLocationsSelect}"
                             update="@([id$=dataTable],[id$=pieChart],[id$=barChart])"
                             onstart="PF('treeBlocker').show();" oncomplete="PF('treeBlocker').hide();"/>
@@ -83,7 +83,7 @@
                                                                   sortBy="#{location.factValueOf(factName)}">
                                                         </p:column>
                                                         <p:column id="P-#{factName}" headerText="%" styleClass="pp-percentageColumn"
-                                                                  sortBy="#{location.factValueOf(factName)}">
+                                                                  sortBy="#{location.factPercentageOf(factName)}">
                                                         </p:column>
                                                     </c:forEach>
                                                 </p:row>
@@ -134,6 +134,7 @@
         jQuery(document).ready(function () {
             PF('welcomeDialog').show();
         });
+
     </script>
 
 

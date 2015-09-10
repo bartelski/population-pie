@@ -26,6 +26,8 @@ public class LocationSorterTest {
     private static final SortDefinition ASCENDING_LOCATIONS;
     private static final SortDefinition DESCENDING_VALUES;
     private static final SortDefinition ASCENDING_VALUES;
+    private static final SortDefinition DESCENDING_PERCENTAGES;
+    private static final SortDefinition ASCENDING_PERCENTAGES;
 
     static {
 
@@ -34,6 +36,9 @@ public class LocationSorterTest {
 
         DESCENDING_VALUES = new SortDefinition(SortType.VALUE, FactName.AGE_0_4, false);
         ASCENDING_VALUES = new SortDefinition(SortType.VALUE, FactName.AGE_0_4, false);
+
+        DESCENDING_PERCENTAGES = new SortDefinition(SortType.VALUE, FactName.AGE_0_4, false);
+        ASCENDING_PERCENTAGES = new SortDefinition(SortType.VALUE, FactName.AGE_0_4, false);
 
     }
 
@@ -87,6 +92,26 @@ public class LocationSorterTest {
 
         assertEquals(findLocation(0, 1), MockCensus.ABBEY);
         assertEquals(findLocation(0, 0), MockCensus.BATHAVON_NORTH);
+
+    }
+
+    @Test
+    public void descendingPercentages() throws Exception {
+
+        LocationSorter.sort(locationHierarchy, DESCENDING_PERCENTAGES);
+
+        assertEquals(findLocation(0, 0), MockCensus.BATHAVON_NORTH);
+        assertEquals(findLocation(0, 1), MockCensus.ABBEY);
+
+    }
+
+    @Test
+    public void ascendingPercentages() throws Exception {
+
+        LocationSorter.sort(locationHierarchy, ASCENDING_PERCENTAGES);
+
+        assertEquals(findLocation(0, 0), MockCensus.BATHAVON_NORTH);
+        assertEquals(findLocation(0, 1), MockCensus.ABBEY);
 
     }
 

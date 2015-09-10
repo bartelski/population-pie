@@ -60,10 +60,16 @@ class LocationSorter {
         };
     }
 
-    private static Comparator<? super Location> percentageComparator(FactName factName, int ascending) {
+    private static Comparator<? super Location> percentageComparator(final FactName factName, final int ascending) {
         return new Comparator<Location>() {
             public int compare(Location l1, Location l2) {
-                return 0;
+
+                final double factPercent1 = l1.factPercentageOf(factName).doubleValue();
+                final double factPercent2 = l2.factPercentageOf(factName).doubleValue();
+
+                return factPercent1 < factPercent2 ? (-ascending): factPercent2 < factPercent1 ? ascending : 0;
+
+
             }
         };
     }

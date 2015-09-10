@@ -7,7 +7,6 @@ import uk.co.i4software.poppie.census.FactName;
 import uk.co.i4software.poppie.census.Location;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * (c) Copyright i4 Software Ltd. All Rights Reserved.
@@ -24,14 +23,10 @@ class FactModel implements Serializable {
     @Getter
     private final HorizontalBarChartModel barChartModel;
 
-    private final Map<Location, Map<FactName, Number>> locationPercentages;
-
-    public FactModel(PieChartModel pieChartModel, HorizontalBarChartModel barChartModel,
-                     Map<Location, Map<FactName, Number>> locationPercentages) {
+    public FactModel(PieChartModel pieChartModel, HorizontalBarChartModel barChartModel) {
 
         this.pieChartModel = pieChartModel;
         this.barChartModel = barChartModel;
-        this.locationPercentages = locationPercentages;
     }
 
     public Number valueOf(Location location, FactName factName) {
@@ -39,6 +34,6 @@ class FactModel implements Serializable {
     }
 
     public Number percentageOf(Location location, FactName factName) {
-        return locationPercentages.get(location).get(factName);
+        return location.factPercentageOf(factName);
     }
 }
