@@ -71,9 +71,13 @@
 }
 
 .pp-icon {
-    display: inline-block !important;
     padding-left: 5px;
     padding-right: 5px;
+    float: left;
+}
+
+.pp-footer {
+    text-align: center !important;
 }
 
 .pp-infoIcon {
@@ -86,10 +90,14 @@
 }
 
 .pp-themeSwitcher {
-    width:165px !important;
-    position:absolute !important;
-    top:0;
-    right:0;
+    float: right;
+    vertical-align: top;
+    min-width: 165px;
+}
+
+.pp-twitter {
+    float: left;
+    height: 25px;
 }
 
 .pp-pieIcon {

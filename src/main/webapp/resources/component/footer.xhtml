@@ -17,22 +17,26 @@
 
     <ui:include src="info.xhtml"/>
 
-    <div style="text-align: center; padding-bottom:1em">
+    <div class="pp-footer">
 
-        <span style="float:left;">
-            <h:outputLink onclick="PF('infoDialog').show();" styleClass="ui-icon fa fa-info pp-icon pp-infoIcon" value="#"/>
-            <h:outputLink value="mailto:hello@populationpie.co.uk" title="Email me"><h:outputText styleClass="ui-icon fa fa-envelope-o pp-icon"/></h:outputLink>
-            <h:outputLink value="https://uk.linkedin.com/pub/david-barton/6/657/b6" title="Connect with me" target="_blank"><h:outputText styleClass="ui-icon fa fa-linkedin pp-icon"/></h:outputLink>
-            <h:outputLink value="https://twitter.com/davidbarton_" title="Follow me" target="_blank"><h:outputText styleClass="ui-icon fa fa-twitter pp-icon"/></h:outputLink>
-        </span>
+        <h:outputLink onclick="PF('infoDialog').show();" styleClass="ui-icon fa fa-info pp-icon pp-infoIcon" value="#"/>
+        <h:outputLink value="mailto:hello@populationpie.co.uk" title="Email me"><h:outputText styleClass="ui-icon fa fa-envelope-o pp-icon"/></h:outputLink>
+        <h:outputLink value="https://uk.linkedin.com/pub/david-barton/6/657/b6" title="Connect with me" target="_blank"><h:outputText styleClass="ui-icon fa fa-linkedin pp-icon"/></h:outputLink>
+        <h:outputLink value="https://twitter.com/davidbarton_" title="Follow me" target="_blank"><h:outputText styleClass="ui-icon fa fa-twitter pp-icon"/></h:outputLink>
 
-        <h:outputText styleClass="ui-icon fa fa-copyright pp-icon"/>Copyright 2015, I4 Software Ltd. All rights reserved.
 
-        <p:themeSwitcher id="basic" styleClass="pp-themeSwitcher" value="afterwork">
+        <h:outputText styleClass="fa fa-copyright" style="vertical-align: top"/><span style="vertical-align: top"> Copyright 2015, I4 Software Ltd. All rights reserved</span>
+
+        <p:themeSwitcher styleClass="pp-themeSwitcher" value="afterwork" >
             <f:selectItems value="#{mainController.themes}" var="theme"/>
         </p:themeSwitcher>
 
-    </div>
+        </div>
+
+    <span class="pp-twitter">
+        <a href="https://twitter.com/intent/tweet?button_hashtag=PopulationPie" class="twitter-hashtag-button" data-related="populationpie,davidbarton_" data-url="http://www.populationpie.co.uk">Tweet #PopulationPie</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </span>
 
 </ui:composition>
 
