@@ -23,7 +23,15 @@
     display: inline-block !important;
 }
 
+.twitter-timeline {
+    height: 100% !important;
+}
+
 .pp-southLayoutUnit > .ui-layout-unit-content  {
+    overflow: hidden !important;
+}
+
+.pp-eastLayoutUnit > .ui-layout-unit-content  {
     overflow: hidden !important;
 }
 
@@ -80,6 +88,10 @@
     text-align: center !important;
 }
 
+.pp-copyright {
+    vertical-align: top;
+}
+
 .pp-infoIcon {
     cursor: pointer;
     text-decoration: none;
@@ -93,11 +105,7 @@
     float: right;
     vertical-align: top;
     min-width: 165px;
-}
-
-.pp-twitter {
-    float: left;
-    height: 25px;
+    margin-bottom: 5px;
 }
 
 .pp-pieIcon {

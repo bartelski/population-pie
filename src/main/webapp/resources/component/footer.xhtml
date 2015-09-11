@@ -25,18 +25,13 @@
         <h:outputLink value="https://twitter.com/davidbarton_" title="Follow me" target="_blank"><h:outputText styleClass="ui-icon fa fa-twitter pp-icon"/></h:outputLink>
 
 
-        <h:outputText styleClass="fa fa-copyright" style="vertical-align: top"/><span style="vertical-align: top"> Copyright 2015, I4 Software Ltd. All rights reserved</span>
+        <h:outputText styleClass="fa fa-copyright" class="pp-copyright"/><span class="pp-copyright"> Copyright 2015, I4 Software Ltd. All rights reserved</span>
 
         <p:themeSwitcher styleClass="pp-themeSwitcher" value="afterwork" >
             <f:selectItems value="#{mainController.themes}" var="theme"/>
         </p:themeSwitcher>
 
         </div>
-
-    <span class="pp-twitter">
-        <a href="https://twitter.com/intent/tweet?button_hashtag=PopulationPie" class="twitter-hashtag-button" data-related="populationpie,davidbarton_" data-url="http://www.populationpie.co.uk">Tweet #PopulationPie</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    </span>
 
 </ui:composition>
 
